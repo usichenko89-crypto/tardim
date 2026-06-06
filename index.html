@@ -19,15 +19,39 @@
             --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        * { scroll-behavior: smooth; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        /* ЖЕСТКАЯ БЛОКИРОВКА СДВИГА ВБОК ДЛЯ ВСЕЙ СТРАНИЦЫ */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        * { 
+            scroll-behavior: smooth; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+        }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0; padding: 0; background-color: var(--white); color: var(--dark); line-height: 1.5;
-            overflow-x: hidden;
+            background-color: var(--white); 
+            color: var(--dark); 
+            line-height: 1.5;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 15px; width: 100%; }
+        /* Защита контейнеров от вылезания за экраны */
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 0 15px; 
+            width: 100%;
+            box-sizing: border-box;
+        }
 
         /* КЛАССЫ ДЛЯ АНИМАЦИИ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ */
         .reveal {
@@ -45,9 +69,10 @@
             padding: 10px 0; 
             position: sticky; 
             top: 0; 
-            background: var(--white); /* Плотный белый фон, чтобы логотип выделялся правильно */
+            background: var(--white);
             z-index: 1000; 
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            width: 100%;
         }
 
         header .container { display: flex; justify-content: space-between; align-items: center; }
@@ -88,6 +113,7 @@
         .hero {
             text-align: center; color: white; position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; min-height: 580px;
+            width: 100%;
         }
 
         .hero::before {
@@ -134,7 +160,7 @@
         .btn-main:active { transform: translateY(-1px); }
 
         /* SECTION HEADERS */
-        .section { padding: 90px 0; width: 100%; }
+        .section { padding: 90px 0; width: 100%; overflow: hidden; }
         .section-header { text-align: center; margin-bottom: 50px; width: 100%; }
         
         .section-header h2 {
@@ -158,11 +184,17 @@
         .about-text-block p { font-size: clamp(15px, 3.5vw, 18px); color: var(--dark); line-height: 1.6; margin: 0 0 12px 0; font-weight: 500; }
         .about-text-block p:last-child { margin-bottom: 0; color: #5a6573; font-weight: 400; }
 
-        /* СТИЛЬНАЯ АНИМАЦИЯ ДЛЯ РАЗДЕЛА «ПОЧЕМУ ВЫБИРАЮТ НАС» БЕЗ ВРАЩЕНИЯ */
-        .features-grid { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-top: 20px; text-align: center; width: 100%; }
+        /* СТИЛЬНАЯ АНИМАЦИЯ ДЛЯ ПРЕИМУЩЕСТВ С АДАПТИВНОЙ СЕТКОЙ ДЛЯ ТЕЛЕФОНОВ */
+        .features-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 15px; 
+            margin-top: 20px; 
+            text-align: center; 
+            width: 100%; 
+        }
         
         .feature-item { 
-            flex: 1; 
             padding: 20px 10px; 
             border-radius: 12px;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s ease; 
@@ -187,15 +219,16 @@
         
         .feature-item h4 { font-size: clamp(11px, 1.8vw, 15px); color: var(--brand-primary); text-transform: uppercase; font-weight: 800; margin: 0; letter-spacing: 0.3px; line-height: 1.2; }
 
-        /* SERVICES СЕТКА GRID */
+        /* SERVICES СЕТКА GRID С ПРАВИЛЬНЫМИ МОБИЛЬНЫМИ ОТСТУПАМИ */
         .services-grid {
             display: flex; gap: 25px; overflow-x: auto; scroll-snap-type: x mandatory;
-            padding: 20px 15px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+            padding: 20px 0; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+            width: 100%;
         }
         .services-grid::-webkit-scrollbar { display: none; }
 
         .service-card {
-            flex: 0 0 290px; scroll-snap-align: center; background: white;
+            flex: 0 0 285px; scroll-snap-align: center; background: white;
             padding: 35px 25px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.04);
             text-align: left; border-top: 5px solid var(--brand-primary);
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -217,12 +250,12 @@
         .service-list li::before { content: "—"; position: absolute; left: 0; color: var(--brand-secondary); font-weight: bold; }
 
         /* ПРИМЕРЫ РАБОТ - ГАЛЕРЕЯ */
-        .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 0 10px; }
+        .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 0; width: 100%; }
 
         .portfolio-item {
             position: relative; border-radius: 14px; overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.06); aspect-ratio: 4 / 3;
-            background-color: #e2e8f0; cursor: pointer;
+            background-color: #e2e8f0; cursor: pointer; width: 100%;
         }
 
         .portfolio-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -308,13 +341,18 @@
             font-size: 11px; color: #627282; text-align: center; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE МЕДИА-ЗАПРОСЫ */
         @media (min-width: 992px) {
-            .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); overflow: visible; gap: 30px; }
+            .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); overflow: visible; gap: 30px; padding: 20px 0; }
             .service-card { flex: none; width: auto; }
             .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
             .footer-info { flex-direction: row; justify-content: space-between; gap: 20px; }
             .footer-emails { align-items: flex-start; }
+        }
+
+        @media (max-width: 991px) {
+            /* Преимущества на планшетах делим на 3 колонки, на телефонах ниже на 2 */
+            .features-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
         }
 
         @media (max-width: 768px) {
@@ -326,6 +364,13 @@
             .messenger-icons { gap: 10px; }
             .messenger-link { font-size: 22px; }
             .about-text-block { padding: 25px 20px; }
+            
+            /* Преимущества на смартфонах аккуратно делятся в два ряда, сетка железно держит размер */
+            .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            /* Последний 5-й элемент растягиваем на всю ширину для симметрии */
+            .feature-item:nth-child(5) { grid-column: span 2; }
+
+            /* Мобильные стрелочки лайтбокса опускаем вниз, чтобы не вылезали за края */
             .lightbox-prev { left: 10px; top: auto; bottom: -60px; transform: none; }
             .lightbox-next { right: 10px; top: auto; bottom: -60px; transform: none; }
             .lightbox-close { top: -50px; right: 10px; }
@@ -510,7 +555,7 @@
 
                 <!-- Проект 4 -->
                 <div class="portfolio-item" onclick="openLightbox(3)">
-                    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800&auto=format&fit=crop" alt="Коммерческая реновация">
+                    <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=800&auto=format&fit=crop" alt="Коммерческая реновация">
                     <div class="portfolio-overlay">
                         <h3>Коммерческая реновация</h3>
                         <p>Полный цикл подготовки: от демонтажа перегородок до чистового малярного ремонта.</p>
