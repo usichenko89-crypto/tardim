@@ -19,22 +19,12 @@
             --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* ЖЕСТКАЯ БЛОКИРОВКА СДВИГА ВБОК ДЛЯ ВСЕЙ СТРАНИЦЫ */
+        /* Убираем конфликты с html и body, чтобы вернуть работу position: sticky на смартфонах */
         html, body {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-            position: relative;
             margin: 0;
             padding: 0;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        * { 
-            scroll-behavior: smooth; 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
+            width: 100%;
+            min-height: 100%;
         }
 
         body {
@@ -44,13 +34,18 @@
             line-height: 1.5;
         }
 
-        /* Защита контейнеров от вылезания за экраны */
+        * { 
+            scroll-behavior: smooth; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        /* Ограничитель ширины контента */
         .container { 
             max-width: 1100px; 
             margin: 0 auto; 
             padding: 0 15px; 
             width: 100%;
-            box-sizing: border-box;
         }
 
         /* КЛАССЫ ДЛЯ АНИМАЦИИ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ */
@@ -64,14 +59,15 @@
             transform: translateY(0);
         }
 
-        /* HEADER — ЧИСТО БЕЛЫЙ, БЕЗ ЛИШНИХ ПОЛОС И ПРОЗРАЧНОСТИ */
+        /* HEADER — НАДЁЖНАЯ ФИКСАЦИЯ, РАБОТАЕТ НА ВСЕХ МОБИЛЬНЫХ И ПК */
         header {
             padding: 10px 0; 
+            position: -webkit-sticky;
             position: sticky; 
             top: 0; 
             background: var(--white);
             z-index: 1000; 
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
             width: 100%;
         }
 
@@ -79,7 +75,7 @@
 
         .logo-link { display: flex; align-items: center; text-decoration: none; }
 
-        /* ЛОГОТИП — ЧИСТЫЙ, КРУГЛЫЙ, БЕЗ АНИМАЦИЙ И СВЕЧЕНИЯ */
+        /* ЛОГОТИП — ЧИСТЫЙ, КРУГЛЫЙ */
         .logo-img {
             height: 105px; 
             width: auto; 
@@ -108,6 +104,13 @@
         .messenger-link:nth-child(2) i { animation-delay: 0.4s; }
         .messenger-link:nth-child(3) i { animation-delay: 0.8s; }
         .messenger-link:nth-child(4) i { animation-delay: 1.2s; }
+
+        /* ОБЕРТКА КОНТЕНТА — ЗАЩИЩАЕТ ОТ СДВИГОВ ЭКРАНА ВБОК */
+        .page-content-wrapper {
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
 
         /* HERO С ПОДВИЖНЫМ ЗАДНИМ ФОНОМ */
         .hero {
@@ -160,7 +163,7 @@
         .btn-main:active { transform: translateY(-1px); }
 
         /* SECTION HEADERS */
-        .section { padding: 90px 0; width: 100%; overflow: hidden; }
+        .section { padding: 90px 0; width: 100%; }
         .section-header { text-align: center; margin-bottom: 50px; width: 100%; }
         
         .section-header h2 {
@@ -184,7 +187,7 @@
         .about-text-block p { font-size: clamp(15px, 3.5vw, 18px); color: var(--dark); line-height: 1.6; margin: 0 0 12px 0; font-weight: 500; }
         .about-text-block p:last-child { margin-bottom: 0; color: #5a6573; font-weight: 400; }
 
-        /* СТИЛЬНАЯ АНИМАЦИЯ ДЛЯ ПРЕИМУЩЕСТВ С АДАПТИВНОЙ СЕТКОЙ ДЛЯ ТЕЛЕФОНОВ */
+        /* СЕТКА ПРЕИМУЩЕСТВ */
         .features-grid { 
             display: grid; 
             grid-template-columns: repeat(5, 1fr); 
@@ -219,7 +222,7 @@
         
         .feature-item h4 { font-size: clamp(11px, 1.8vw, 15px); color: var(--brand-primary); text-transform: uppercase; font-weight: 800; margin: 0; letter-spacing: 0.3px; line-height: 1.2; }
 
-        /* SERVICES СЕТКА GRID С ПРАВИЛЬНЫМИ МОБИЛЬНЫМИ ОТСТУПАМИ */
+        /* SERVICES СЕТКА GRID */
         .services-grid {
             display: flex; gap: 25px; overflow-x: auto; scroll-snap-type: x mandatory;
             padding: 20px 0; scrollbar-width: none; -webkit-overflow-scrolling: touch;
@@ -273,7 +276,7 @@
         .portfolio-overlay h3 { margin: 0 0 6px 0; font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .portfolio-overlay p { margin: 0; font-size: 13px; color: #e2e8f0; font-weight: 300; }
 
-        /* ИНТЕРАКТИВНЫЙ ЛАЙТБОКС */
+        /* ЛАЙТБОКС */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(20, 26, 30, 0.98); z-index: 2000;
@@ -351,7 +354,6 @@
         }
 
         @media (max-width: 991px) {
-            /* Преимущества на планшетах делим на 3 колонки, на телефонах ниже на 2 */
             .features-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
         }
 
@@ -365,12 +367,9 @@
             .messenger-link { font-size: 22px; }
             .about-text-block { padding: 25px 20px; }
             
-            /* Преимущества на смартфонах аккуратно делятся в два ряда, сетка железно держит размер */
             .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            /* Последний 5-й элемент растягиваем на всю ширину для симметрии */
             .feature-item:nth-child(5) { grid-column: span 2; }
 
-            /* Мобильные стрелочки лайтбокса опускаем вниз, чтобы не вылезали за края */
             .lightbox-prev { left: 10px; top: auto; bottom: -60px; transform: none; }
             .lightbox-next { right: 10px; top: auto; bottom: -60px; transform: none; }
             .lightbox-close { top: -50px; right: 10px; }
@@ -397,175 +396,192 @@
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Создаем и обновляем пространство <br>с качеством, которому доверяют</h1>
-            <p>Поставка и профессиональный монтаж современных архитектурных и интерьерных решений.</p>
-            <div class="hero-btn-group">
-                <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="btn-main">Связаться с нами</a>
-                <a href="#portfolio" class="btn-main">Примеры работ</a>
-            </div>
-        </div>
-    </section>
+    <div class="page-content-wrapper">
 
-    <section id="about" class="section reveal">
-        <div class="container">
-            <div class="section-header">
-                <h2>О компании</h2>
-                <div class="line"></div>
+        <section class="hero">
+            <div class="container">
+                <h1>Создаем и обновляем пространство <br>с качеством, которому доверяют</h1>
+                <p>Поставка и профессиональный монтаж современных архитектурных и интерьерных решений.</p>
+                <div class="hero-btn-group">
+                    <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="btn-main">Связаться с нами</a>
+                    <a href="#portfolio" class="btn-main">Примеры работ</a>
+                </div>
             </div>
-            <div class="about-text-block">
-                <p>Компания Tardim Union выполняет полный комплекс строительных и отделочных работ с основным акцентом на качественную внутреннюю отделку помещений «под ключ».</p>
-                <p>Мы сопровождаем проект на всех этапах — от консультации и оценки до полной реализации и сдачи объекта.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="why-choose-us" class="section reveal" style="padding-top: 0; padding-bottom: 40px;">
-        <div class="container">
-            <div class="section-header">
-                <h2>Почему выбирают нас</h2>
-                <div class="line"></div>
-            </div>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <i class="fas fa-cubes"></i>
-                    <h4>Комплексный подход</h4>
+        <section id="about" class="section reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>О компании</h2>
+                    <div class="line"></div>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-star"></i>
-                    <h4>Аккуратность и качество</h4>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-lightbulb"></i>
-                    <h4>Рациональные решения</h4>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-calendar-check"></i>
-                    <h4>Соблюдение сроков</h4>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-user-tie"></i>
-                    <h4>Индивидуальный подход</h4>
+                <div class="about-text-block">
+                    <p>Компания Tardim Union выполняет полный комплекс строительных и отделочных работ с основным акцентом на качественную внутреннюю отделку помещений «под ключ».</p>
+                    <p>Мы сопровождаем проект на всех этапах — от консультации и оценки до полной реализации и сдачи объекта.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="services" class="section reveal" style="background-color: var(--light-bg);">
-        <div class="container">
-            <div class="section-header">
-                <h2>Наши услуги</h2>
-                <div class="line"></div>
-            </div>
-            
-            <div class="services-grid">
-                <!-- Карточка 1 -->
-                <div class="service-card">
-                    <div class="service-card-header">
-                        <i class="fas fa-paint-roller"></i>
-                        <h3>Ремонт и отделка</h3>
+        <section id="why-choose-us" class="section reveal" style="padding-top: 0; padding-bottom: 40px;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Почему выбирают нас</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-cubes"></i>
+                        <h4>Комплексный подход</h4>
                     </div>
-                    <ul class="service-list">
-                        <li>Внутренняя отделка помещений любой сложности.</li>
-                        <li>Капитальный и косметический ремонт объектов.</li>
-                        <li>Поклейка всех видов обоев и малярные работы.</li>
-                    </ul>
-                </div>
-
-                <!-- Карточка 2 -->
-                <div class="service-card">
-                    <div class="service-card-header">
-                        <i class="fas fa-th-large"></i>
-                        <h3>Покрытия и панели</h3>
+                    <div class="feature-item">
+                        <i class="fas fa-star"></i>
+                        <h4>Аккуратность и качество</h4>
                     </div>
-                    <ul class="service-list">
-                        <li>Укладка ламината и современных напольных покрытий.</li>
-                        <li>Монтаж стильных интерьерных стеновых панелей.</li>
-                        <li>Монтаж и профессиональная установка алюминиевых систем.</li>
-                    </ul>
-                </div>
-
-                <!-- Карточка 3 -->
-                <div class="service-card">
-                    <div class="service-card-header">
-                        <i class="fas fa-hammer"></i>
-                        <h3>Демонтажные работы</h3>
+                    <div class="feature-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Рациональные решения</h4>
                     </div>
-                    <ul class="service-list">
-                        <li>Демонтаж перегородок, стен и старой отделки.</li>
-                        <li>Подготовка помещений под ремонт и перепланировку.</li>
-                        <li>Демонтаж в коммерческих помещениях (офисы, магазины и др.).</li>
-                        <li>Демонтаж фасадных утеплительных систем.</li>
-                        <li>Комплексная подготовка объектов к полной реконструкции.</li>
-                    </ul>
-                </div>
-
-                <!-- Карточка 4 -->
-                <div class="service-card">
-                    <div class="service-card-header">
-                        <i class="fas fa-tools"></i>
-                        <h3>Реставрация</h3>
+                    <div class="feature-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <h4>Соблюдение сроков</h4>
                     </div>
-                    <ul class="service-list">
-                        <li>Реставрация мебели и поврежденных поверхностей.</li>
-                        <li>Восстановление плитки и точечный локальный ремонт.</li>
-                        <li>Оперативное устранение дефектов без полной замены элементов.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- РАЗДЕЛ: ПРИМЕРЫ РАБОТ С ИНТЕРАКТИВНОЙ ГАЛЕРЕЕЙ -->
-    <section id="portfolio" class="section reveal">
-        <div class="container">
-            <div class="section-header">
-                <h2>Примеры работ</h2>
-                <div class="line"></div>
-            </div>
-            
-            <div class="portfolio-grid">
-                <!-- Проект 1 -->
-                <div class="portfolio-item" onclick="openLightbox(0)">
-                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" alt="Комплексная отделка виллы">
-                    <div class="portfolio-overlay">
-                        <h3>Комплексная отделка виллы</h3>
-                        <p>Внутренние малярные работы, бесшовный декор стен и скрытый монтаж панелей.</p>
-                    </div>
-                </div>
-
-                <!-- Проект 2 -->
-                <div class="portfolio-item" onclick="openLightbox(1)">
-                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" alt="Монтаж напольных покрытий">
-                    <div class="portfolio-overlay">
-                        <h3>Монтаж напольных покрытий</h3>
-                        <p>Идеальная укладка износостойкого ламината и стыковка со скрытыми плинтусами.</p>
-                    </div>
-                </div>
-
-                <!-- Проект 3 -->
-                <div class="portfolio-item" onclick="openLightbox(2)">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="Алюминиевые раздвижные системы">
-                    <div class="portfolio-overlay">
-                        <h3>Алюминиевые раздвижные системы</h3>
-                        <p>Интеграция панорамного остекления, монтаж современных защитных жалюзи и пергол.</p>
-                    </div>
-                </div>
-
-                <!-- Проект 4 -->
-                <div class="portfolio-item" onclick="openLightbox(3)">
-                    <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=800&auto=format&fit=crop" alt="Коммерческая реновация">
-                    <div class="portfolio-overlay">
-                        <h3>Коммерческая реновация</h3>
-                        <p>Полный цикл подготовки: от демонтажа перегородок до чистового малярного ремонта.</p>
+                    <div class="feature-item">
+                        <i class="fas fa-user-tie"></i>
+                        <h4>Индивидуальный подход</h4>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ЭЛЕМЕНТ ВСПЛЫВАЮЩЕЙ ГАЛЕРЕИ (ЛАЙТБОКС) -->
+        <section id="services" class="section reveal" style="background-color: var(--light-bg);">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Наши услуги</h2>
+                    <div class="line"></div>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-card-header">
+                            <i class="fas fa-paint-roller"></i>
+                            <h3>Ремонт и отделка</h3>
+                        </div>
+                        <ul class="service-list">
+                            <li>Внутренняя отделка помещений любой сложности.</li>
+                            <li>Капитальный и косметический ремонт объектов.</li>
+                            <li>Поклейка всех видов обоев и малярные работы.</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-card-header">
+                            <i class="fas fa-th-large"></i>
+                            <h3>Покрытия и панели</h3>
+                        </div>
+                        <ul class="service-list">
+                            <li>Укладка ламината и современных напольных покрытий.</li>
+                            <li>Монтаж стильных интерьерных стеновых панелей.</li>
+                            <li>Монтаж и профессиональная установка алюминиевых систем.</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-card-header">
+                            <i class="fas fa-hammer"></i>
+                            <h3>Демонтажные работы</h3>
+                        </div>
+                        <ul class="service-list">
+                            <li>Демонтаж перегородок, стен и старой отделки.</li>
+                            <li>Подготовка помещений под ремонт и перепланировку.</li>
+                            <li>Демонтаж в коммерческих помещениях (офисы, магазины и др.).</li>
+                            <li>Демонтаж фасадных утеплительных систем.</li>
+                            <li>Комплексная подготовка объектов к полной реконструкции.</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-card-header">
+                            <i class="fas fa-tools"></i>
+                            <h3>Реставрация</h3>
+                        </div>
+                        <ul class="service-list">
+                            <li>Реставрация мебели и поврежденных поверхностей.</li>
+                            <li>Восстановление плитки и точечный локальный ремонт.</li>
+                            <li>Оперативное устранение дефектов без полной замены элементов.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="section reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Примеры работ</h2>
+                    <div class="line"></div>
+                </div>
+                
+                <div class="portfolio-grid">
+                    <div class="portfolio-item" onclick="openLightbox(0)">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" alt="Комплексная отделка виллы">
+                        <div class="portfolio-overlay">
+                            <h3>Комплексная отделка виллы</h3>
+                            <p>Внутренние малярные работы, бесшовный декор стен и скрытый монтаж панелей.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item" onclick="openLightbox(1)">
+                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" alt="Монтаж напольных покрытий">
+                        <div class="portfolio-overlay">
+                            <h3>Монтаж напольных покрытий</h3>
+                            <p>Идеальная укладка износостойкого ламината и стыковка со скрытыми плинтусами.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item" onclick="openLightbox(2)">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="Алюминиевые раздвижные системы">
+                        <div class="portfolio-overlay">
+                            <h3>Алюминиевые раздвижные системы</h3>
+                            <p>Интеграция панорамного остекления, монтаж современных защитных жалюзи и пергол.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item" onclick="openLightbox(3)">
+                        <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=800&auto=format&fit=crop" alt="Коммерческая реновация">
+                        <div class="portfolio-overlay">
+                            <h3>Коммерческая реновация</h3>
+                            <p>Полный цикл подготовки: от демонтажа перегородок до чистового малярного ремонта.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contacts-section">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <div>
+                            <a href="tel:+35796129815" class="footer-link-main" style="margin-bottom: 5px;"><i class="fas fa-phone"></i> +357 96 129815</a>
+                            <a href="tel:+35795583003" class="footer-link-main"><i class="fas fa-phone"></i> +357 95 583003</a>
+                        </div>
+                        <div class="footer-emails">
+                            <div><i class="fas fa-envelope"></i> <a href="mailto:tardimunion@gmail.com">tardimunion@gmail.com</a></div>
+                        </div>
+                    </div>
+                    <div class="footer-socials">
+                        <a href="https://wa.me/35796129815" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="footer-bottom">© 2026 TarDim Union Ltd. Все права защищены.</div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
     <div id="lightboxModal" class="lightbox">
         <div class="lightbox-spinner" id="lightboxSpinner"></div>
         <div class="lightbox-content">
@@ -577,30 +593,6 @@
         </div>
     </div>
 
-    <footer id="contacts-section">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <div>
-                        <a href="tel:+35796129815" class="footer-link-main" style="margin-bottom: 5px;"><i class="fas fa-phone"></i> +357 96 129815</a>
-                        <a href="tel:+35795583003" class="footer-link-main"><i class="fas fa-phone"></i> +357 95 583003</a>
-                    </div>
-                    <div class="footer-emails">
-                        <div><i class="fas fa-envelope"></i> <a href="mailto:tardimunion@gmail.com">tardimunion@gmail.com</a></div>
-                    </div>
-                </div>
-                <div class="footer-socials">
-                    <a href="https://wa.me/35796129815" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
-                    <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                </div>
-                <div class="footer-bottom">© 2026 TarDim Union Ltd. Все права защищены.</div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- СКРИПТ УПРАВЛЕНИЯ ЭФФЕКТАМИ И ГАЛЕРЕЕЙ -->
     <script>
         // АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ
         function revealSections() {
@@ -617,7 +609,6 @@
         
         window.addEventListener('scroll', revealSections);
         window.addEventListener('DOMContentLoaded', revealSections);
-
 
         // МАССИВ С ИЗОБРАЖЕНИЯМИ ДЛЯ ГАЛЕРЕИ
         const projectGalleries = [
