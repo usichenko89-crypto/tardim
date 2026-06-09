@@ -19,17 +19,33 @@
             --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        html, body { 
-            margin: 0; padding: 0; width: 100%; min-height: 100%; 
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
-                        url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png') center center / cover no-repeat fixed;
+        /* КЛАССИЧЕСКИЙ СТАБИЛЬНЫЙ ФОН НАПРЯМУЮ ДЛЯ BODY */
+        html {
+            height: 100%;
+            background-color: #000;
         }
         body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             color: var(--white); 
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            
+            /* Универсальное объявление фона без ломающихся на iOS fixed-эффектов */
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
+                              url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png');
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: scroll; /* Гарантирует правильный масштаб и видимость на смартфонах */
+        }
+        
+        /* Для больших экранов (ПК) возвращаем красивый премиальный эффект фиксации при скролле */
+        @media (min-width: 769px) {
+            body {
+                background-attachment: fixed;
+            }
         }
         
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -185,7 +201,7 @@
         .footer-socials a:hover { color: var(--white); transform: translateY(-3px); }
         .footer-bottom { width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; font-size: 11px; color: #5f6d77; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
 
-        /* КНОПКА СТРЕЛКИ — ЕДИНЫЙ, СТАБИЛЬНЫЙ КЛАСС ДЛЯ ВСЕХ ДИСПЛЕЕВ */
+        /* КНОПКА СТРЕЛКИ НАВЕРХ */
         .scroll-to-top {
             position: fixed !important;
             bottom: 25px !important;
@@ -203,16 +219,14 @@
             backdrop-filter: blur(10px) !important;
             -webkit-backdrop-filter: blur(10px) !important;
             box-shadow: 0 4px 25px rgba(0,0,0,0.7) !important;
-            z-index: 9999999 !important; /* Абсолютный приоритет над футером */
+            z-index: 9999999 !important;
             
-            /* Скрытие через жесткое отключение видимости во избежание багов iOS */
             opacity: 0 !important;
             visibility: hidden !important;
             pointer-events: none !important;
             transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important;
         }
         
-        /* Состояние активации при скролле */
         .scroll-to-top.visible {
             opacity: 1 !important;
             visibility: visible !important;
@@ -272,7 +286,6 @@
             .lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
             .lightbox-close { top: -50px; right: 10px; }
             
-            /* На мобильных только немного уменьшаем габариты, не ломая структуру */
             .scroll-to-top {
                 bottom: 20px !important;
                 right: 20px !important;
@@ -491,7 +504,7 @@
         </div>
     </div>
 
-    <!-- ТА САМАЯ СТРЕЛКА НАВЕРХ -->
+    <!-- КНОПКА СТРЕЛКИ НАВЕРХ -->
     <div id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()" title="Наверх">
         <i class="fas fa-chevron-up"></i>
     </div>
@@ -517,7 +530,6 @@
             });
         }
 
-        // Высокоточный замер высоты скролла
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         function handleScrollButton() {
             const currentScrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
