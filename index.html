@@ -19,11 +19,17 @@
             --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* ИСПРАВЛЕННЫЙ БЛОК: Заменил fixed на scroll для iPhone */
         html, body { 
             margin: 0; padding: 0; width: 100%; min-height: 100%; 
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
                         url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png') center center / cover no-repeat fixed;
         }
+
+        @supports (-webkit-touch-callout: none) {
+            html, body { background-attachment: scroll !important; }
+        }
+
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             color: var(--white); 
@@ -203,27 +209,15 @@
             backdrop-filter: blur(10px) !important;
             -webkit-backdrop-filter: blur(10px) !important;
             box-shadow: 0 4px 25px rgba(0,0,0,0.7) !important;
-            z-index: 9999999 !important; /* Абсолютный приоритет над футером */
-            
-            /* Скрытие через жесткое отключение видимости во избежание багов iOS */
+            z-index: 9999999 !important;
             opacity: 0 !important;
             visibility: hidden !important;
             pointer-events: none !important;
             transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important;
         }
         
-        /* Состояние активации при скролле */
-        .scroll-to-top.visible {
-            opacity: 1 !important;
-            visibility: visible !important;
-            pointer-events: auto !important;
-        }
-        
-        .scroll-to-top:hover { 
-            background-color: var(--brand-secondary) !important; 
-            color: #000 !important; 
-            border-color: var(--brand-secondary) !important; 
-        }
+        .scroll-to-top.visible { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .scroll-to-top:hover { background-color: var(--brand-secondary) !important; color: #000 !important; border-color: var(--brand-secondary) !important; }
 
         /* ОКНО СВЯЗИ */
         .modal-overlay {
@@ -248,9 +242,9 @@
         .btn-phone-style { background-color: rgba(255,255,255,0.03); color: var(--white); border: 1px solid rgba(255,255,255,0.1); }
         .btn-phone-style:hover { background-color: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); }
         .btn-tg-style { background-color: #0F202C; color: #54B3E6; }
-        .btn-tg-style:hover { background-color: var(--telegram); color: var(--white); }
+        .btn-tg-style:hover { background-color: #0088cc; color: var(--white); }
         .btn-wa-style { background-color: #11251A; color: #55E08F; }
-        .btn-wa-style:hover { background-color: var(--whatsapp); color: var(--white); }
+        .btn-wa-style:hover { background-color: #25D366; color: var(--white); }
 
         @media (max-width: 991px) {
             .principles-grid { grid-template-columns: 1fr; gap: 15px; background: transparent; }
@@ -271,16 +265,7 @@
             .lightbox-prev, .lightbox-next { bottom: -60px; top: auto; transform: none; }
             .lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
             .lightbox-close { top: -50px; right: 10px; }
-            
-            /* На мобильных только немного уменьшаем габариты, не ломая структуру */
-            .scroll-to-top {
-                bottom: 20px !important;
-                right: 20px !important;
-                width: 44px !important;
-                height: 44px !important;
-                font-size: 15px !important;
-                border-color: var(--brand-secondary) !important;
-            }
+            .scroll-to-top { bottom: 20px !important; right: 20px !important; width: 44px !important; height: 44px !important; font-size: 15px !important; }
         }
     </style>
 </head>
@@ -303,7 +288,6 @@
         </div>
     </header>
 
-    <!-- ГЛАВНЫЙ БАННЕР -->
     <section class="hero">
         <div class="container">
             <h1>Инженерное проектирование<br>и внутренняя отделка</h1>
@@ -314,14 +298,12 @@
         </div>
     </section>
 
-    <!-- ПРИНЦИПЫ РАБОТЫ -->
     <section id="principles-section" class="section reveal">
         <div class="container">
             <div class="section-header-premium">
                 <span class="tag">Принципы</span>
                 <h2>На которых строится наша работа</h2>
             </div>
-            
             <div class="principles-grid">
                 <div class="principles-item">
                     <h4>Комплексный подход и аккуратность</h4>
@@ -333,13 +315,12 @@
                 </div>
                 <div class="principles-item">
                     <h4>Индивидуальность и сроки</h4>
-                    <p>Строгое соблюнение утвержденного графика работ. Профессионально подходим к задачам любого объема — от точечной реставрации до масштабной коммерческой реконструкции.</p>
+                    <p>Строгое соблюдение утвержденного графика работ. Профессионально подходим к задачам любого объема — от точечной реставрации до масштабной коммерческой реконструкции.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- НАШИ УСЛУГИ -->
     <section id="services-section" class="reveal" style="padding: 20px 0 80px 0;">
         <div class="container">
             <div class="section-header-premium">
@@ -347,10 +328,8 @@
                 <h2>Направления деятельности</h2>
             </div>
         </div>
-        
         <div class="container-fluid">
             <div class="services-panorama">
-                
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=600" alt="Ремонт и отделка">
                     <div class="service-pan-overlay">
@@ -362,7 +341,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=600" alt="Покрытия и панели">
                     <div class="service-pan-overlay">
@@ -374,7 +352,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600" alt="Демонтажные работы">
                     <div class="service-pan-overlay">
@@ -386,7 +363,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=600" alt="Реставрация">
                     <div class="service-pan-overlay">
@@ -398,61 +374,37 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- ПОРТФОЛИО -->
     <section id="portfolio-section" class="section reveal" style="padding-top: 0;">
         <div class="container">
             <div class="section-header-premium">
                 <span class="tag">Портфолио</span>
                 <h2>Примеры реализованных объектов</h2>
             </div>
-            
             <div class="portfolio-grid-premium">
                 <div onclick="openLightbox(0)">
-                    <div class="portfolio-item-premium">
-                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800" alt="Комплексная отделка виллы">
-                    </div>
-                    <div class="portfolio-text-under">
-                        <h3>Отделка загородной виллы</h3>
-                        <p>Лимассол</p>
-                    </div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800" alt="Комплексная отделка виллы"></div>
+                    <div class="portfolio-text-under"><h3>Отделка загородной виллы</h3><p>Лимассол</p></div>
                 </div>
                 <div onclick="openLightbox(1)">
-                    <div class="portfolio-item-premium">
-                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800" alt="Монтаж напольных покрытий">
-                    </div>
-                    <div class="portfolio-text-under">
-                        <h3>Укладка инженерных покрытий</h3>
-                        <p>Агиос Тихонас</p>
-                    </div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800" alt="Монтаж напольных покрытий"></div>
+                    <div class="portfolio-text-under"><h3>Укладка инженерных покрытий</h3><p>Агиос Тихонас</p></div>
                 </div>
                 <div onclick="openLightbox(2)">
-                    <div class="portfolio-item-premium">
-                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" alt="Алюминиевые раздвижные системы">
-                    </div>
-                    <div class="portfolio-text-under">
-                        <h3>Монтаж панорамных систем</h3>
-                        <p>Марина Лимассол</p>
-                    </div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" alt="Алюминиевые раздвижные системы"></div>
+                    <div class="portfolio-text-under"><h3>Монтаж панорамных систем</h3><p>Марина Лимассол</p></div>
                 </div>
                 <div onclick="openLightbox(3)">
-                    <div class="portfolio-item-premium">
-                        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800" alt="Коммерческая реновация">
-                    </div>
-                    <div class="portfolio-text-under">
-                        <h3>Реновация офисного пространства</h3>
-                        <p>Центр города</p>
-                    </div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800" alt="Коммерческая реновация"></div>
+                    <div class="portfolio-text-under"><h3>Реновация офисного пространства</h3><p>Центр города</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -461,9 +413,7 @@
                         <a href="tel:+35796129815" class="footer-link-main" style="margin-bottom: 6px;"><i class="fas fa-phone"></i> +357 96 129815</a>
                         <a href="tel:+35795583003" class="footer-link-main"><i class="fas fa-phone"></i> +357 95 583003</a>
                     </div>
-                    <div class="footer-emails">
-                        <div><i class="far fa-envelope"></i> <a href="mailto:tardimunion@gmail.com">tardimunion@gmail.com</a></div>
-                    </div>
+                    <div class="footer-emails"><div><i class="far fa-envelope"></i> <a href="mailto:tardimunion@gmail.com">tardimunion@gmail.com</a></div></div>
                 </div>
                 <div class="footer-socials">
                     <a href="https://wa.me/35796129815" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
@@ -476,7 +426,6 @@
         </div>
     </footer>
 
-    <!-- ТЕМНОЕ ОКНО КОНТАКТОВ -->
     <div id="contactsModal" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-close-btn" onclick="closeContactsModal()"><i class="fas fa-times"></i></button>
@@ -491,12 +440,10 @@
         </div>
     </div>
 
-    <!-- ТА САМАЯ СТРЕЛКА НАВЕРХ -->
     <div id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()" title="Наверх">
         <i class="fas fa-chevron-up"></i>
     </div>
 
-    <!-- ЛАЙТБОКС ГАЛЕРЕИ -->
     <div id="lightboxModal" class="lightbox">
         <div class="lightbox-spinner" id="lightboxSpinner"></div>
         <div class="lightbox-content">
@@ -516,41 +463,19 @@
                 if (revealTop < window.innerHeight - 50) { reveal.classList.add('active'); }
             });
         }
-
-        // Высокоточный замер высоты скролла
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         function handleScrollButton() {
             const currentScrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-            
-            if (currentScrollHeight > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
+            if (currentScrollHeight > 300) { scrollTopBtn.classList.add('visible'); } 
+            else { scrollTopBtn.classList.remove('visible'); }
         }
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        window.addEventListener('scroll', () => {
-            revealSections();
-            handleScrollButton();
-        });
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            revealSections();
-            handleScrollButton();
-        });
-
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        window.addEventListener('scroll', () => { revealSections(); handleScrollButton(); });
+        window.addEventListener('DOMContentLoaded', () => { revealSections(); handleScrollButton(); });
         const contactsModal = document.getElementById('contactsModal');
         function openContactsModal() { contactsModal.style.display = 'flex'; setTimeout(() => contactsModal.classList.add('show'), 10); document.body.style.overflow = 'hidden'; }
         function closeContactsModal() { contactsModal.classList.remove('show'); setTimeout(() => { contactsModal.style.display = 'none'; }, 400); document.body.style.overflow = 'auto'; }
         contactsModal.addEventListener('click', function(e) { if (e.target === this) closeContactsModal(); });
-
         const projectGalleries = [
             { title: "Отделка загородной виллы", images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200", "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200", "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1200"] },
             { title: "Укладка инженерных покрытий", images: ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1200", "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?q=80&w=1200"] },
