@@ -19,15 +19,18 @@
             --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* ИСПРАВЛЕННЫЙ БЛОК: Заменил fixed на scroll для iPhone */
+        /* ИСПРАВЛЕННЫЙ ФОН: Фикс для iPhone, чтобы картинка не растягивалась */
         html, body { 
             margin: 0; padding: 0; width: 100%; min-height: 100%; 
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
                         url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png') center center / cover no-repeat fixed;
         }
 
-        @supports (-webkit-touch-callout: none) {
-            html, body { background-attachment: scroll !important; }
+        /* ЭТОТ БЛОК УБИРАЕТ "ЗУМ" НА IPHONE */
+        @media only screen and (max-device-width: 1024px) {
+            html, body {
+                background-attachment: scroll !important;
+            }
         }
 
         body { 
@@ -191,7 +194,7 @@
         .footer-socials a:hover { color: var(--white); transform: translateY(-3px); }
         .footer-bottom { width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; font-size: 11px; color: #5f6d77; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
 
-        /* КНОПКА СТРЕЛКИ — ЕДИНЫЙ, СТАБИЛЬНЫЙ КЛАСС ДЛЯ ВСЕХ ДИСПЛЕЕВ */
+        /* КНОПКА СТРЕЛКИ */
         .scroll-to-top {
             position: fixed !important;
             bottom: 25px !important;
