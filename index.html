@@ -17,14 +17,26 @@
             --telegram: #0088cc;
             --instagram: #E1306C;
             --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+/* ИСПРАВЛЕННЫЙ ФОН: Фикс для iPhone */
+html, body { 
+    margin: 0; padding: 0; width: 100%; min-height: 100%; 
+    background-color: #000;
+}
 
-        /* ИСПРАВЛЕННЫЙ ФОН: Фикс для iPhone, чтобы картинка не растягивалась */
-        html, body { 
-            margin: 0; padding: 0; width: 100%; min-height: 100%; 
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
-                        url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png') center center / cover no-repeat fixed;
-        }
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; /* Принудительная высота в 100% экрана */
+    z-index: -1;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
+                url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover; /* Это растянет картинку правильно */
+}
 
         /* ЭТОТ БЛОК УБИРАЕТ "ЗУМ" НА IPHONE */
         @media only screen and (max-device-width: 1024px) {
