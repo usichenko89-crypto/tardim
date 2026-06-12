@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>О компании | TarDim Union Ltd</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        :root {
+            --bg-dark: rgba(0, 0, 0, 0.65); 
+            --brand-secondary: #C2A67D; /* Тот самый песочно-золотой оттенок под тон подсветки виллы */
+            --white: #ffffff;
+            --text-muted: #B0BFC5;
+            --text-light: #E2E8F0;
+            --whatsapp: #25D366;
+            --facebook: #1877F2;
+            --telegram: #0088cc;
+            --instagram: #E1306C;
+            --transition-premium: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ПОЛНОЕ СОХРАНЕНИЕ ФИРМЕННОГО СТИЛЯ И ФОНА */
+        html, body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%; 
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
+                        url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png') center center / cover no-repeat fixed;
+        }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            color: var(--white); 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition-premium); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ШАПКА (ПОЛНАЯ КОПИЯ С ГЛАВНОЙ СТРАНИЦЫ) */
+        header { 
+            position: absolute; 
+            top: 0; left: 0; width: 100%; 
+            padding: 20px 0; 
+            z-index: 1000; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+        }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo-link { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { 
+            height: 95px; width: auto; display: block; object-fit: contain; 
+            opacity: 0.95; transition: opacity 0.3s ease; background: transparent;
+        }
+        .logo-link:hover .logo-img { opacity: 1; }
+
+        .header-right { display: flex; align-items: center; gap: 35px; }
+        .nav-menu { display: flex; align-items: center; gap: 25px; }
+        
+        .nav-link { 
+            color: var(--white); text-decoration: none; font-weight: 500; text-transform: uppercase; 
+            font-size: 13px; letter-spacing: 2px; opacity: 0.8; transition: var(--transition-premium); 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+        }
+        .nav-link:hover { opacity: 1; color: var(--brand-secondary); }
+
+        .nav-social-link { font-size: 18px; color: var(--white); text-decoration: none; opacity: 0.65; transition: var(--transition-premium); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); }
+        .nav-social-link:hover { opacity: 1; transform: translateY(-2px); }
+        .nav-social-link.fb:hover { color: #1877F2; }
+        .nav-social-link.ig:hover { color: #E1306C; }
+        .nav-social-link.wa:hover { color: #25D366; }
+        .nav-social-link.tg:hover { color: #0088cc; }
+
+        .page-content-wrapper { width: 100%; overflow-x: hidden; position: relative; }
+
+        /* ИНТРО-СЕКЦИЯ СТРАНИЦЫ «О КОМПАНИИ» */
+        .about-hero { 
+            padding-top: 200px; padding-bottom: 60px; text-align: left; position: relative; 
+            display: flex; align-items: center; min-height: 55vh; width: 100%; 
+        }
+        .about-hero h1 { 
+            font-size: clamp(28px, 5.5vw, 48px); text-transform: uppercase; font-weight: 400; 
+            margin: 0 0 20px 0; line-height: 1.15; letter-spacing: 3px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.9);
+        }
+        .about-hero p { 
+            font-size: clamp(14px, 2vw, 18px); margin: 0; font-weight: 400; 
+            color: var(--text-light); max-width: 700px; line-height: 1.6;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ — ТЕКСТОВАЯ СЕТКА С ПРЕМИУМ МАТОВЫМ СТЕКЛОМ */
+        .about-section { padding-bottom: 120px; width: 100%; position: relative; }
+        
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        
+        /* Блоки с эффектом матового стекла (backdrop-filter) для идеальной читаемости текста */
+        .about-card { 
+            padding: 45px 40px; 
+            background: rgba(0, 0, 0, 0.45); 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        .about-card.full-width { grid-column: 1 / -1; }
+        
+        .about-card h3 { 
+            font-size: 18px; color: var(--brand-secondary); text-transform: uppercase; 
+            font-weight: 600; margin: 0 0 20px 0; letter-spacing: 2px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+        }
+        .about-card p { font-size: 15px; color: var(--text-light); line-height: 1.7; margin: 0 0 20px 0; font-weight: 300; }
+        .about-card p:last-child { margin-bottom: 0; }
+        
+        /* Стилизованные списки преимуществ */
+        .about-list { list-style: none; padding: 0; margin: 0; }
+        .about-list li { font-size: 15px; color: var(--text-light); margin-bottom: 12px; font-weight: 300; position: relative; padding-left: 20px; line-height: 1.5; }
+        .about-list li::before { content: "—"; position: absolute; left: 0; color: var(--brand-secondary); font-weight: bold; }
+        .about-list li:last-child { margin-bottom: 0; }
+
+        /* FOOTER (ПОЛНАЯ КОПИЯ С ГЛАВНОЙ СТРАНИЦЫ) */
+        footer { background: rgba(7, 9, 11, 0.93); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.15); width: 100%; backdrop-filter: blur(10px); }
+        .footer-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .footer-info { display: flex; flex-direction: column; gap: 30px; align-items: center; margin-bottom: 45px; width: 100%; }
+        .footer-link-main { color: var(--white); text-decoration: none; font-weight: 400; font-size: 15px; display: flex; align-items: center; gap: 10px; opacity: 0.8; transition: opacity 0.3s; }
+        .footer-link-main:hover { opacity: 1; color: var(--brand-secondary); }
+        .footer-emails { font-size: 14px; color: var(--text-muted); }
+        .footer-emails a { color: var(--white); text-decoration: none; opacity: 0.8; }
+        .footer-emails a:hover { opacity: 1; color: var(--brand-secondary); }
+        .footer-socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 45px; }
+        .footer-socials a { color: var(--text-muted); font-size: 22px; transition: var(--transition-premium); text-decoration: none; }
+        .footer-socials a:hover { color: var(--white); transform: translateY(-3px); }
+        .footer-bottom { width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; font-size: 11px; color: #5f6d77; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        /* ОКНО СВЯЗИ */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; }
+        .modal-overlay.show { opacity: 1; }
+        .modal-box { background: #0E1317; width: 90%; max-width: 480px; padding: 45px 35px; box-shadow: 0 25px 70px rgba(0,0,0,0.7); position: relative; text-align: center; transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255,255,255,0.1); }
+        .modal-overlay.show .modal-box { transform: translateY(0); }
+        .modal-close-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.05); border: none; width: 36px; height: 36px; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .modal-close-btn:hover { background: var(--brand-secondary); color: #000; }
+        .modal-box h3 { margin: 0 0 10px 0; font-size: 20px; text-transform: uppercase; color: var(--white); font-weight: 400; letter-spacing: 2px; }
+        .modal-box .subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 30px; font-weight: 300; }
+        .modal-contacts-list { display: flex; flex-direction: column; gap: 12px; }
+        .contact-btn-large { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 16px 20px; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: var(--transition-premium); }
+        .btn-phone-style { background-color: rgba(255,255,255,0.03); color: var(--white); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-phone-style:hover { background-color: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); }
+        .btn-tg-style { background-color: #0F202C; color: #54B3E6; }
+        .btn-tg-style:hover { background-color: var(--telegram); color: var(--white); }
+        .btn-wa-style { background-color: #11251A; color: #55E08F; }
+        .btn-wa-style:hover { background-color: var(--whatsapp); color: var(--white); }
+
+        /* КНОПКА ВВЕРХ */
+        .scroll-to-top { position: fixed; bottom: 30px; right: 30px; width: 46px; height: 46px; background-color: rgba(0, 0, 0, 0.7); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; z-index: 1500; opacity: 0; visibility: hidden; transition: var(--transition-premium); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(4px); }
+        .scroll-to-top.visible { opacity: 1; visibility: visible; }
+        .scroll-to-top:hover { background-color: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); }
+
+        @media (min-width: 768px) { .footer-info { flex-direction: row; justify-content: space-between; gap: 20px; } }
+        @media (max-width: 991px) {
+            .about-grid { grid-template-columns: 1fr; gap: 30px; }
+            .header-right { gap: 20px; }
+            .nav-menu { gap: 15px; }
+        }
+        @media (max-width: 768px) {
+            .about-hero { padding-top: 160px; padding-bottom: 40px; }
+            .about-card { padding: 30px 25px; }
+            .logo-img { height: 75px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА САЙТА -->
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <img src="https://i.ibb.co/Xmz0cg6/photo-2026-06-09-21-35-46-Photoroom.png" alt="TarDim Union Logo" class="logo-img">
+            </a>
+            <div class="header-right">
+                <nav class="nav-menu">
+                    <a href="index.html" class="nav-link">Главная</a>
+                    <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener" class="nav-social-link fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener" class="nav-social-link ig" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/35796129815" target="_blank" rel="noopener" class="nav-social-link wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="nav-social-link tg" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content-wrapper">
+
+        <!-- ИНТРО-ЗАГОЛОВОК -->
+        <section class="about-hero">
+            <div class="container">
+                <h1 class="reveal active">О компании TarDim Union Ltd</h1>
+                <p class="reveal active">Мы создаем современные, долговечные и эстетичные интерьерные решения на Кипре, сочетая передовую инженерию и безупречное качество финишной отделки.</p>
+            </div>
+        </section>
+
+        <!-- ИНФОРМАЦИОННЫЕ БЛОКИ С МАТОВЫМ СТЭКЛОМ -->
+        <main class="about-section">
+            <div class="container">
+                <div class="about-grid">
+                    
+                    <div class="about-card reveal active">
+                        <h3>Кто мы</h3>
+                        <p>TarDim Union Ltd — это официально зарегистрированная строительно-отделочная компания полного цикла со штаб-квартирой в Лимассоле.</p>
+                        <p>Мы специализируемся на реализации сложных архитектурных проектов, поставке премиальных строительных материалов и высокопрофессиональном монтаже «под ключ».</p>
+                    </div>
+
+                    <div class="about-card reveal active">
+                        <h3>Наши преимущества</h3>
+                        <ul class="about-list">
+                            <li>Официальный статус и прозрачная финансовая отчетность.</li>
+                            <li>Собственные квалифицированные бригады мастеров узкого профиля.</li>
+                            <li>Строгий контроль технологических карт и стандартов ЕС на каждом этапе.</li>
+                            <li>Работа по детальному официальному договору с фиксированными сроками.</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-card full-width reveal">
+                        <h3>Философия нашей работы</h3>
+                        <p>Для нас не существует незначительных деталей. Будь то комплексная финишная отделка эксклюзивной загородной виллы, малярные работы в жилом комплексе или деликатная локальная реставрация поверхностей — каждый сантиметр прорабатывается с высочайшей точностью и аккуратностью.</p>
+                        <p>Мы берем на себя полную координацию процессов: от грамотного инженерного планирования и подбора лучших материалов под утвержденный бюджет до финишного клининга объекта. Наша цель — избавить клиента от любых строительных хлопот, предоставив результат, превосходящий ожидания.</p>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <div>
+                            <a href="tel:+35796129815" class="footer-link-main" style="margin-bottom: 6px;"><i class="fas fa-phone"></i> +357 96 129815</a>
+                            <a href="tel:+35795583003" class="footer-link-main"><i class="fas fa-phone"></i> +357 95 583003</a>
+                        </div>
+                        <div class="footer-emails">
+                            <div><i class="far fa-envelope"></i> <a href="mailto:tardimunion@gmail.com">tardimunion@gmail.com</a></div>
+                        </div>
+                    </div>
+                    <div class="footer-socials">
+                        <a href="https://wa.me/35796129815" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="footer-bottom">© 2026 TarDim Union Ltd. Все права защищены.</div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ТЕМНОЕ ОКНО КОНТАКТОВ -->
+    <div id="contactsModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeContactsModal()"><i class="fas fa-times"></i></button>
+            <h3>Связаться с нами</h3>
+            <div class="subtitle">Выберите удобный способ коммуникации</div>
+            
+            <div class="modal-contacts-list">
+                <a href="tel:+35796129815" class="contact-btn-large btn-phone-style">
+                    <i class="fas fa-phone-alt"></i> Звонок: +357 96 129815
+                </a>
+                <a href="tel:+35795583003" class="contact-btn-large btn-phone-style">
+                    <i class="fas fa-phone-alt"></i> Звонок: +357 95 583003
+                </a>
+                <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="contact-btn-large btn-tg-style">
+                    <i class="fab fa-telegram-plane"></i> Написать в Telegram
+                </a>
+                <a href="https://wa.me/35796129815" target="_blank" rel="noopener" class="contact-btn-large btn-wa-style">
+                    <i class="fab fa-whatsapp"></i> Написать в WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- КНОПКА СТРЕЛКИ ВВЕРХ -->
+    <div id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script>
+        function revealSections() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            reveals.forEach(reveal => {
+                const revealTop = reveal.getBoundingClientRect().top;
+                if (revealTop < windowHeight - 50) { reveal.classList.add('active'); }
+            });
+
+            const topBtn = document.getElementById('scrollTopBtn');
+            if (window.scrollY > 300) { topBtn.classList.add('visible'); } else { topBtn.classList.remove('visible'); }
+        }
+        
+        window.addEventListener('scroll', revealSections);
+        window.addEventListener('DOMContentLoaded', revealSections);
+        setTimeout(revealSections, 150);
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        const contactsModal = document.getElementById('contactsModal');
+        function openContactsModal() {
+            contactsModal.style.display = 'flex';
+            setTimeout(() => contactsModal.classList.add('show'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeContactsModal() {
+            contactsModal.classList.remove('show');
+            setTimeout(() => { contactsModal.style.display = 'none'; }, 400);
+            document.body.style.overflow = 'auto';
+        }
+        contactsModal.addEventListener('click', function(e) { if (e.target === this) closeContactsModal(); });
+    </script>
+</body>
+</html>
