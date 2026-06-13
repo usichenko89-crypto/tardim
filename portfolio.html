@@ -60,37 +60,13 @@
         .logo-img { height: 90px; width: auto; display: block; object-fit: contain; opacity: 0.95; transition: opacity 0.3s ease; }
         .logo-link:hover .logo-img { opacity: 1; }
 
-        /* ВЫПАДАЮЩЕЕ МЕНЮ */
-        .header-right { display: flex; align-items: center; }
-        .dropdown { position: relative; display: inline-block; }
-        .dropbtn { 
-            background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.15); 
-            width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-size: 18px; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        /* ССЫЛКА НА ГЛАВНУЮ */
+        .nav-link { 
+            color: var(--white); text-decoration: none; font-weight: 500; text-transform: uppercase; 
+            font-size: 13px; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 20px; transition: var(--transition-premium); white-space: nowrap;
         }
-        .dropbtn:hover, .dropdown:hover .dropbtn, .dropbtn.active { 
-            border-color: var(--brand-secondary); background: var(--brand-secondary); color: #000; transform: translateY(-2px);
-        }
-        .dropdown-content {
-            visibility: hidden; position: absolute; right: 0; top: 120%; min-width: 240px;
-            background-color: rgba(14, 19, 23, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0px 15px 40px rgba(0,0,0,0.9); z-index: 1000;
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden;
-            opacity: 0; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .dropdown:hover .dropdown-content, .dropdown-content.show {
-            visibility: visible; opacity: 1; transform: translateY(0); top: 100%; margin-top: 15px;
-        }
-        .dropdown-content a {
-            color: var(--white); padding: 18px 25px; text-decoration: none; display: flex; align-items: center; gap: 12px;
-            font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500;
-            border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition-premium);
-        }
-        .dropdown-content a i { font-size: 14px; opacity: 0.5; transition: 0.3s; }
-        .dropdown-content a:last-child { border-bottom: none; }
-        .dropdown-content a:hover { background-color: rgba(194, 166, 125, 0.08); color: var(--brand-secondary); padding-left: 30px; }
-        .dropdown-content a:hover i { opacity: 1; color: var(--brand-secondary); }
+        .nav-link:hover { border-color: var(--brand-secondary); color: var(--brand-secondary); }
 
         /* МИНИ БАННЕР */
         .hero-mini { text-align: left; color: var(--white); position: relative; display: flex; align-items: center; min-height: 45vh; width: 100%; padding-top: 140px; }
@@ -175,16 +151,7 @@
             <a href="index.html" class="logo-link">
                 <img src="https://i.ibb.co/Xmz0cg6/photo-2026-06-09-21-35-46-Photoroom.png" alt="TarDim Union Logo" class="logo-img">
             </a>
-            <div class="header-right">
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleMenu(event)" id="menuBtn"><i class="fas fa-bars"></i></button>
-                    <div class="dropdown-content" id="dropdownMenu">
-                        <a href="index.html"><i class="fas fa-home"></i> Главная</a>
-                        <a href="portfolio.html"><i class="fas fa-images"></i> Портфолио</a>
-                        <a href="about.html"><i class="fas fa-info-circle"></i> О компании</a>
-                    </div>
-                </div>
-            </div>
+            <a href="index.html" class="nav-link"><i class="fas fa-arrow-left"></i> На главную</a>
         </div>
     </header>
 
@@ -268,23 +235,6 @@
     </div>
 
     <script>
-        /* Управление выпадающим меню на мобильных */
-        function toggleMenu(e) {
-            e.stopPropagation();
-            document.getElementById("dropdownMenu").classList.toggle("show");
-            document.getElementById("menuBtn").classList.toggle("active");
-        }
-        window.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                const dropdown = document.getElementById("dropdownMenu");
-                const btn = document.getElementById("menuBtn");
-                if (dropdown && dropdown.classList.contains('show')) {
-                    dropdown.classList.remove('show');
-                    btn.classList.remove('active');
-                }
-            }
-        });
-
         function filterPortfolio(category, e) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             e.target.classList.add('active');
