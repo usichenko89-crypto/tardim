@@ -17,44 +17,37 @@
             --telegram: #0088cc;
             --instagram: #E1306C;
             --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-/* ИСПРАВЛЕННЫЙ ФОН: Фикс для iPhone */
-html, body { 
-    margin: 0; padding: 0; width: 100%; min-height: 100%; 
-    background-color: #000;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100vh; /* Принудительная высота в 100% экрана */
-    z-index: -1;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
-                url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover; /* Это растянет картинку правильно */
-}
-
-        /* ЭТОТ БЛОК УБИРАЕТ "ЗУМ" НА IPHONE */
-        @media only screen and (max-device-width: 1024px) {
-            html, body {
-                background-attachment: scroll !important;
-            }
         }
 
+        html { background-color: #000; scroll-behavior: smooth; }
+
         body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%; 
+            background-color: transparent; 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             color: var(--white); 
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
+                        url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        @media only screen and (max-device-width: 1024px) {
+            html, body { background-attachment: scroll !important; }
+        }
         
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
         .container-fluid { width: 100%; padding: 0; }
@@ -64,135 +57,83 @@ body::before {
 
         /* ШАПКА */
         header { 
-            position: absolute; 
-            top: 0; left: 0; width: 100%; 
-            padding: 20px 0; 
-            z-index: 1000; 
+            position: absolute; top: 0; left: 0; width: 100%; 
+            padding: 20px 0; z-index: 1000; 
             background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
         }
         header .container { display: flex; justify-content: space-between; align-items: center; }
         
         .logo-link { display: flex; align-items: center; text-decoration: none; }
-        .logo-img { 
-            height: 90px; width: auto; display: block; object-fit: contain; 
-            opacity: 0.95; transition: opacity 0.3s ease; background: transparent;
-        }
+        .logo-img { height: 90px; width: auto; display: block; object-fit: contain; opacity: 0.95; transition: opacity 0.3s ease; }
         .logo-link:hover .logo-img { opacity: 1; }
 
-        .header-right { display: flex; align-items: center; gap: 35px; }
-        .nav-menu { display: flex; align-items: center; gap: 25px; }
-        
-        .nav-link { 
-            color: var(--white); text-decoration: none; font-weight: 500; text-transform: uppercase; 
-            font-size: 13px; letter-spacing: 2px; opacity: 0.8; transition: var(--transition-premium); 
-            text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+        /* ВЫПАДАЮЩЕЕ МЕНЮ */
+        .header-right { display: flex; align-items: center; }
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { 
+            background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.15); 
+            width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 18px; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        .nav-link:hover { opacity: 1; color: var(--brand-secondary); }
-
-        .nav-social-link { font-size: 19px; color: var(--white); text-decoration: none; opacity: 0.7; transition: var(--transition-premium); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); }
-        .nav-social-link:hover { opacity: 1; transform: translateY(-2px); }
-        .nav-social-link.fb:hover { color: #1877F2; }
-        .nav-social-link.ig:hover { color: #E1306C; }
-        .nav-social-link.wa:hover { color: #25D366; }
-        .nav-social-link.tg:hover { color: #0088cc; }
-
-        /* ГЛАВНЫЙ БАННЕР */
-        .hero { 
-            text-align: left; color: var(--white); position: relative; 
-            display: flex; align-items: center; min-height: 95vh; width: 100%; 
-            padding-top: 140px;
+        .dropbtn:hover, .dropdown:hover .dropbtn, .dropbtn.active { 
+            border-color: var(--brand-secondary); background: var(--brand-secondary); color: #000; transform: translateY(-2px);
         }
+        .dropdown-content {
+            visibility: hidden; position: absolute; right: 0; top: 120%; min-width: 240px;
+            background-color: rgba(14, 19, 23, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0px 15px 40px rgba(0,0,0,0.9); z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden;
+            opacity: 0; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dropdown:hover .dropdown-content, .dropdown-content.show {
+            visibility: visible; opacity: 1; transform: translateY(0); top: 100%; margin-top: 15px;
+        }
+        .dropdown-content a {
+            color: var(--white); padding: 18px 25px; text-decoration: none; display: flex; align-items: center; gap: 12px;
+            font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition-premium);
+        }
+        .dropdown-content a i { font-size: 14px; opacity: 0.5; transition: 0.3s; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: rgba(194, 166, 125, 0.08); color: var(--brand-secondary); padding-left: 30px; }
+        .dropdown-content a:hover i { opacity: 1; color: var(--brand-secondary); }
+
+        .hero { text-align: left; color: var(--white); position: relative; display: flex; align-items: center; min-height: 95vh; width: 100%; padding-top: 140px; }
         .hero .container { position: relative; z-index: 1; max-width: 1200px; }
-        
-        .hero h1 { 
-            font-size: clamp(26px, 5vw, 56px); text-transform: uppercase; font-weight: 400; 
-            margin: 0 0 22px 0; line-height: 1.2; letter-spacing: 2px; max-width: 900px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.9);
-        }
-
-        .hero p { 
-            font-size: clamp(14px, 1.8vw, 18px); margin-bottom: 40px; font-weight: 400; 
-            color: #FFFFFF; max-width: 650px; line-height: 1.6;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
+        .hero h1 { font-size: clamp(26px, 5vw, 56px); text-transform: uppercase; font-weight: 400; margin: 0 0 22px 0; line-height: 1.2; letter-spacing: 2px; max-width: 900px; text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.9); }
+        .hero p { font-size: clamp(14px, 1.8vw, 18px); margin-bottom: 40px; font-weight: 400; color: #FFFFFF; max-width: 650px; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .hero-btn-group { display: flex; align-items: center; gap: 25px; flex-wrap: wrap; }
 
-        .btn-main { 
-            padding: 18px 40px; text-decoration: none; font-weight: 600; border-radius: 0px; 
-            display: inline-block; background-color: var(--brand-secondary); color: #000; 
-            text-transform: uppercase; font-size: 13px; letter-spacing: 2px; border: none; cursor: pointer; 
-            transition: var(--transition-premium); box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
+        .btn-main { padding: 18px 40px; text-decoration: none; font-weight: 600; border-radius: 0px; display: inline-block; background-color: var(--brand-secondary); color: #000; text-transform: uppercase; font-size: 13px; letter-spacing: 2px; border: none; cursor: pointer; transition: var(--transition-premium); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         .btn-main:hover { background-color: var(--white); color: #000; transform: translateY(-2px); }
+        .btn-outline { background-color: transparent; border: 1px solid var(--brand-secondary); color: var(--brand-secondary); }
+        .btn-outline:hover { background-color: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); }
 
-        /* ПРОЗРАЧНЫЕ СЕКЦИИ */
         .section { padding: 100px 0; width: 100%; position: relative; }
-        
         .section-header-premium { text-align: left; margin-bottom: 50px; }
         .section-header-premium .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 5px; color: var(--brand-secondary); display: block; margin-bottom: 12px; font-weight: 600; }
         .section-header-premium h2 { font-size: clamp(22px, 3.5vw, 32px); text-transform: uppercase; font-weight: 400; letter-spacing: 2px; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.8); }
 
-        /* ПРИНЦИПЫ РАБОТЫ */
         .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; margin-top: 40px; gap: 1px; background: rgba(255,255,255,0.1); }
         .principles-item { padding: 40px; background: rgba(7, 9, 11, 0.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         .principles-item h4 { font-size: 14px; color: var(--brand-secondary); text-transform: uppercase; font-weight: 600; margin: 0 0 20px 0; letter-spacing: 2px; }
         .principles-item p { font-size: 14px; color: var(--text-light); line-height: 1.6; margin: 0; font-weight: 300; }
 
-        /* НАШИ УСЛУГИ */
-        .services-panorama {
-            display: grid; grid-template-columns: repeat(4, 1fr); width: 100%;
-            border-top: 1px solid rgba(255,255,255,0.15); border-bottom: 1px solid rgba(255,255,255,0.15);
-        }
-        
-        .service-pan-card {
-            position: relative; aspect-ratio: 1 / 1.3; overflow: hidden;
-            border-right: 1px solid rgba(255,255,255,0.15); cursor: pointer;
-            background: rgba(7, 9, 11, 0.5); transition: var(--transition-premium);
-        }
+        .services-panorama { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; border-top: 1px solid rgba(255,255,255,0.15); border-bottom: 1px solid rgba(255,255,255,0.15); }
+        .service-pan-card { position: relative; aspect-ratio: 1 / 1.3; overflow: hidden; border-right: 1px solid rgba(255,255,255,0.15); cursor: pointer; background: rgba(7, 9, 11, 0.5); transition: var(--transition-premium); }
         .service-pan-card:last-child { border-right: none; }
         .service-pan-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: var(--transition-premium); opacity: 0.12; }
-        
-        .service-pan-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 35px 25px;
-            display: flex; flex-direction: column; justify-content: flex-end; height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 100%);
-        }
-        
+        .service-pan-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 35px 25px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 100%); }
         .service-pan-card h3 { color: var(--white); font-size: 16px; text-transform: uppercase; font-weight: 500; letter-spacing: 1.5px; margin: 0 0 15px 0; }
         .service-pan-list { list-style: none; padding: 0; margin: 0; opacity: 0; max-height: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .service-pan-list li { font-size: 13px; color: var(--text-light); margin-bottom: 8px; font-weight: 300; position: relative; padding-left: 12px; }
         .service-pan-list li::before { content: "•"; position: absolute; left: 0; color: var(--brand-secondary); }
-
         .service-pan-card:hover { background: rgba(0, 0, 0, 0.85); }
         .service-pan-card:hover img { opacity: 0.25; transform: scale(1.03); }
         .service-pan-card:hover .service-pan-list { opacity: 1; max-height: 220px; margin-top: 5px; }
 
-        /* ПОРТФОЛИО */
-        .portfolio-grid-premium { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 30px; width: 100%; }
-        .portfolio-item-premium { position: relative; overflow: hidden; aspect-ratio: 16 / 11; cursor: pointer; border: 1px solid rgba(255,255,255,0.15); }
-        .portfolio-item-premium img { width: 100%; height: 100%; object-fit: cover; display: block; transition: var(--transition-premium); filter: brightness(0.7); }
-        .portfolio-text-under { margin-top: 15px; display: flex; justify-content: space-between; align-items: baseline; }
-        .portfolio-text-under h3 { font-size: 16px; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; margin: 0; }
-        .portfolio-text-under p { font-size: 13px; color: var(--brand-secondary); margin: 0; }
-        .portfolio-item-premium:hover img { transform: scale(1.02); filter: brightness(0.9); }
-
-        /* ЛАЙТБОКС ГАЛЕРЕИ */
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); z-index: 999999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(10px); }
-        .lightbox.show { opacity: 1; }
-        .lightbox-content { position: relative; max-width: 90%; max-height: 80%; display: flex; flex-direction: column; align-items: center; transform: scale(0.95); transition: transform 0.4s ease; }
-        .lightbox.show .lightbox-content { transform: scale(1); }
-        .lightbox-img { max-width: 100%; max-height: 75vh; object-fit: contain; opacity: 0; transition: opacity 0.3s ease; }
-        .lightbox-img.loaded { opacity: 1; }
-        .lightbox-spinner { position: absolute; width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--brand-secondary); border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .lightbox-caption { color: var(--white); margin-top: 18px; font-size: 15px; text-align: center; text-transform: uppercase; }
-        .lightbox-btn { position: absolute; background: rgba(255,255,255,0.03); color: var(--white); border: none; font-size: 20px; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .lightbox-btn:hover { background: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); }
-        .lightbox-close { top: -60px; right: 0; }
-        .lightbox-prev { left: -70px; top: 50%; transform: translateY(-50%); }
-        .lightbox-next { right: -70px; top: 50%; transform: translateY(-50%); }
-
-        /* FOOTER */
+        /* FOOTER & SOCIALS */
         footer { background: rgba(7, 9, 11, 0.95); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.15); width: 100%; position: relative; z-index: 10; }
         .footer-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .footer-info { display: flex; flex-direction: column; gap: 30px; align-items: center; margin-bottom: 45px; width: 100%; }
@@ -201,52 +142,24 @@ body::before {
         .footer-emails { font-size: 14px; color: var(--text-muted); }
         .footer-emails a { color: var(--white); text-decoration: none; opacity: 0.8; }
         .footer-emails a:hover { opacity: 1; color: var(--brand-secondary); }
-        .footer-socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 45px; }
-        .footer-socials a { color: var(--text-muted); font-size: 22px; transition: var(--transition-premium); text-decoration: none; }
-        .footer-socials a:hover { color: var(--white); transform: translateY(-3px); }
+        
+        .footer-socials { display: flex; justify-content: center; gap: 35px; margin-bottom: 45px; }
+        .footer-socials a { color: var(--text-muted); font-size: 24px; transition: var(--transition-premium); text-decoration: none; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; }
+        .footer-socials a:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); }
+        .footer-socials a.fb:hover { color: var(--facebook); border-color: var(--facebook); }
+        .footer-socials a.ig:hover { color: var(--instagram); border-color: var(--instagram); }
+        .footer-socials a.wa:hover { color: var(--whatsapp); border-color: var(--whatsapp); }
+        .footer-socials a.tg:hover { color: var(--telegram); border-color: var(--telegram); }
+        
         .footer-bottom { width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; font-size: 11px; color: #5f6d77; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
 
-        /* КНОПКА СТРЕЛКИ */
-        .scroll-to-top {
-            position: fixed !important;
-            bottom: 25px !important;
-            right: 25px !important;
-            width: 50px;
-            height: 50px;
-            background-color: #07090b !important;
-            color: var(--white) !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            font-size: 18px !important;
-            cursor: pointer !important;
-            border: 2px solid rgba(255,255,255,0.45) !important;
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.7) !important;
-            z-index: 9999999 !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important;
-        }
-        
+        .scroll-to-top { position: fixed !important; bottom: 25px !important; right: 25px !important; width: 50px; height: 50px; background-color: #07090b !important; color: var(--white) !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 18px !important; cursor: pointer !important; border: 2px solid rgba(255,255,255,0.45) !important; backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important; box-shadow: 0 4px 25px rgba(0,0,0,0.7) !important; z-index: 9999999 !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important; }
         .scroll-to-top.visible { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
         .scroll-to-top:hover { background-color: var(--brand-secondary) !important; color: #000 !important; border-color: var(--brand-secondary) !important; }
 
-        /* ОКНО СВЯЗИ */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            z-index: 20000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 20000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; }
         .modal-overlay.show { opacity: 1; }
-        .modal-box {
-            background: #0E1317; width: 90%; max-width: 480px; padding: 45px 35px;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.7); position: relative; text-align: center;
-            transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .modal-box { background: #0E1317; width: 90%; max-width: 480px; padding: 45px 35px; box-shadow: 0 25px 70px rgba(0,0,0,0.7); position: relative; text-align: center; transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255,255,255,0.1); }
         .modal-overlay.show .modal-box { transform: translateY(0); }
         .modal-close-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.05); border: none; width: 36px; height: 36px; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
         .modal-close-btn:hover { background: var(--brand-secondary); color: #000; }
@@ -267,19 +180,13 @@ body::before {
             .services-panorama { grid-template-columns: repeat(2, 1fr); }
             .service-pan-card { border-bottom: 1px solid rgba(255,255,255,0.15); }
             .service-pan-card:nth-child(2) { border-right: none; }
-            header .container { flex-direction: column; gap: 15px; text-align: center; }
-            .header-right { width: 100%; justify-content: center; }
         }
         @media (max-width: 768px) {
             .services-panorama { grid-template-columns: 1fr; }
             .service-pan-card { border-right: none; aspect-ratio: 1 / 1.1; }
-            .portfolio-grid-premium { grid-template-columns: 1fr; gap: 35px; }
             .logo-img { height: 70px; }
             .hero { padding-top: 180px; min-height: auto; padding-bottom: 60px; }
             .section { padding: 60px 0; }
-            .lightbox-prev, .lightbox-next { bottom: -60px; top: auto; transform: none; }
-            .lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
-            .lightbox-close { top: -50px; right: 10px; }
             .scroll-to-top { bottom: 20px !important; right: 20px !important; width: 44px !important; height: 44px !important; font-size: 15px !important; }
         }
     </style>
@@ -288,17 +195,18 @@ body::before {
 
     <header>
         <div class="container">
-            <a href="#" class="logo-link">
+            <a href="index.html" class="logo-link">
                 <img src="https://i.ibb.co/Xmz0cg6/photo-2026-06-09-21-35-46-Photoroom.png" alt="TarDim Union Logo" class="logo-img">
             </a>
             <div class="header-right">
-                <nav class="nav-menu">
-                    <a href="about.html" class="nav-link">О компании</a>
-                    <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener" class="nav-social-link fb"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener" class="nav-social-link ig"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/35796129815" target="_blank" rel="noopener" class="nav-social-link wa"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="nav-social-link tg"><i class="fab fa-telegram-plane"></i></a>
-                </nav>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="toggleMenu(event)" id="menuBtn"><i class="fas fa-bars"></i></button>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+                        <a href="portfolio.html"><i class="fas fa-images"></i> Портфолио</a>
+                        <a href="about.html"><i class="fas fa-info-circle"></i> О компании</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -390,32 +298,9 @@ body::before {
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="portfolio-section" class="section reveal" style="padding-top: 0;">
-        <div class="container">
-            <div class="section-header-premium">
-                <span class="tag">Портфолио</span>
-                <h2>Примеры реализованных объектов</h2>
-            </div>
-            <div class="portfolio-grid-premium">
-                <div onclick="openLightbox(0)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800" alt="Комплексная отделка виллы"></div>
-                    <div class="portfolio-text-under"><h3>Отделка загородной виллы</h3><p>Лимассол</p></div>
-                </div>
-                <div onclick="openLightbox(1)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800" alt="Монтаж напольных покрытий"></div>
-                    <div class="portfolio-text-under"><h3>Укладка инженерных покрытий</h3><p>Агиос Тихонас</p></div>
-                </div>
-                <div onclick="openLightbox(2)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" alt="Алюминиевые раздвижные системы"></div>
-                    <div class="portfolio-text-under"><h3>Монтаж панорамных систем</h3><p>Марина Лимассол</p></div>
-                </div>
-                <div onclick="openLightbox(3)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800" alt="Коммерческая реновация"></div>
-                    <div class="portfolio-text-under"><h3>Реновация офисного пространства</h3><p>Центр города</p></div>
-                </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="portfolio.html" class="btn-main btn-outline">Перейти в портфолио</a>
             </div>
         </div>
     </section>
@@ -431,10 +316,10 @@ body::before {
                     <div class="footer-emails"><div><i class="far fa-envelope"></i> <a href="mailto:tardimunion@gmail.com">tardimunion@gmail.com</a></div></div>
                 </div>
                 <div class="footer-socials">
-                    <a href="https://wa.me/35796129815" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/35796129815" target="_blank" rel="noopener" class="wa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener" class="fb"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener" class="ig"><i class="fab fa-instagram"></i></a>
                 </div>
                 <div class="footer-bottom">© 2026 TarDim Union Ltd. Все права защищены.</div>
             </div>
@@ -459,18 +344,24 @@ body::before {
         <i class="fas fa-chevron-up"></i>
     </div>
 
-    <div id="lightboxModal" class="lightbox">
-        <div class="lightbox-spinner" id="lightboxSpinner"></div>
-        <div class="lightbox-content">
-            <button class="lightbox-btn lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-            <button class="lightbox-btn lightbox-prev" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></button>
-            <img id="lightboxImg" class="lightbox-img" src="" alt="Галерея работ">
-            <div id="lightboxCaption" class="lightbox-caption"></div>
-            <button class="lightbox-btn lightbox-next" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-
     <script>
+        /* Управление выпадающим меню на мобильных */
+        function toggleMenu(e) {
+            e.stopPropagation();
+            document.getElementById("dropdownMenu").classList.toggle("show");
+            document.getElementById("menuBtn").classList.toggle("active");
+        }
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                const dropdown = document.getElementById("dropdownMenu");
+                const btn = document.getElementById("menuBtn");
+                if (dropdown && dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                    btn.classList.remove('active');
+                }
+            }
+        });
+
         function revealSections() {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(reveal => {
@@ -487,24 +378,11 @@ body::before {
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         window.addEventListener('scroll', () => { revealSections(); handleScrollButton(); });
         window.addEventListener('DOMContentLoaded', () => { revealSections(); handleScrollButton(); });
+        
         const contactsModal = document.getElementById('contactsModal');
         function openContactsModal() { contactsModal.style.display = 'flex'; setTimeout(() => contactsModal.classList.add('show'), 10); document.body.style.overflow = 'hidden'; }
         function closeContactsModal() { contactsModal.classList.remove('show'); setTimeout(() => { contactsModal.style.display = 'none'; }, 400); document.body.style.overflow = 'auto'; }
         contactsModal.addEventListener('click', function(e) { if (e.target === this) closeContactsModal(); });
-        const projectGalleries = [
-            { title: "Отделка загородной виллы", images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200", "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200", "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1200"] },
-            { title: "Укладка инженерных покрытий", images: ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1200", "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?q=80&w=1200"] },
-            { title: "Монтаж панорамных систем", images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200"] },
-            { title: "Реновация офисного пространства", images: ["https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200", "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1200"] }
-        ];
-        let currentProjectIndex = 0; let currentImgIndex = 0;
-        const modal = document.getElementById('lightboxModal'); const lightboxImg = document.getElementById('lightboxImg'); const spinner = document.getElementById('lightboxSpinner');
-        function openLightbox(projectIndex) { currentProjectIndex = projectIndex; currentImgIndex = 0; modal.style.display = 'flex'; setTimeout(() => modal.classList.add('show'), 10); document.body.style.overflow = 'hidden'; updateLightboxData(); }
-        function closeLightbox() { modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; lightboxImg.classList.remove('loaded'); }, 400); document.body.style.overflow = 'auto'; }
-        function changeImage(direction) { const project = projectGalleries[currentProjectIndex]; currentImgIndex += direction; if (currentImgIndex >= project.images.length) currentImgIndex = 0; else if (currentImgIndex < 0) currentImgIndex = project.images.length - 1; lightboxImg.classList.remove('loaded'); updateLightboxData(); }
-        function updateLightboxData() { const project = projectGalleries[currentProjectIndex]; spinner.style.display = 'block'; lightboxImg.src = project.images[currentImgIndex]; document.getElementById('lightboxCaption').innerText = `${project.title} — Фото ${currentImgIndex + 1} из ${project.images.length}`; }
-        lightboxImg.addEventListener('load', () => { spinner.style.display = 'none'; lightboxImg.classList.add('loaded'); });
-        modal.addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
     </script>
 </body>
 </html>
