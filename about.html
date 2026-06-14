@@ -10,63 +10,100 @@
             --brand-secondary: #C2A67D;
             --white: #ffffff;
             --text-light: #E2E8F0;
-            --transition-premium: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --text-muted: #B0BFC5;
+            --whatsapp: #25D366;
+            --facebook: #1877F2;
+            --telegram: #0088cc;
+            --instagram: #E1306C;
+            --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Общие настройки, чтобы ничего не вылезало за края */
-        html, body { 
-            margin: 0; padding: 0; width: 100%; min-height: 100%;
-            overflow-x: hidden;
+        html { background-color: #000; scroll-behavior: smooth; }
+
+        body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%; 
+            background-color: transparent; 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            color: var(--white);
+            color: var(--white); line-height: 1.6;
+            -webkit-font-smoothing: antialiased; overflow-x: hidden;
         }
 
-        /* Возвращаем фоновое изображение */
+        /* Единый фон с портфолио */
         body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1;
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
                         url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png');
             background-position: center center; background-repeat: no-repeat; background-size: cover;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
+        @media only screen and (max-device-width: 1024px) {
+            html, body { background-attachment: scroll !important; }
+        }
 
-        /* ИСПРАВЛЕННАЯ ШАПКА: Лого слева, Ссылка справа */
-        header { padding: 30px 0; width: 100%; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+        /* ШАПКА - Абсолютно идентичная портфолио */
+        header { 
+            position: absolute; top: 0; left: 0; width: 100%; 
+            padding: 20px 0; z-index: 1000; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+        }
         header .container { display: flex; justify-content: space-between; align-items: center; }
         
-        .logo-link { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-        .logo-img { height: 70px; width: auto; transition: 0.3s; }
-        
+        .logo-link { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 90px; width: auto; display: block; object-fit: contain; opacity: 0.95; transition: opacity 0.3s ease; }
+        .logo-link:hover .logo-img { opacity: 1; }
+
+        /* ССЫЛКА НА ГЛАВНУЮ - размер как в портфолио */
         .nav-link { 
             color: var(--white); text-decoration: none; font-weight: 500; text-transform: uppercase; 
-            font-size: 12px; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.2);
-            padding: 8px 15px; transition: var(--transition-premium); white-space: nowrap;
+            font-size: 13px; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 20px; transition: var(--transition-premium); white-space: nowrap;
         }
         .nav-link:hover { border-color: var(--brand-secondary); color: var(--brand-secondary); }
 
         /* КОНТЕНТ */
-        .about-hero { padding: 60px 0; }
-        .about-hero h1 { font-size: clamp(24px, 5vw, 42px); text-transform: uppercase; margin-bottom: 20px; }
-        .about-hero p { font-size: clamp(14px, 2vw, 16px); color: var(--text-light); max-width: 700px; }
+        /* Отступ 140px, чтобы текст не залезал под прозрачную шапку */
+        .about-hero { padding: 140px 0 60px 0; }
+        .about-hero h1 { font-size: clamp(26px, 5vw, 46px); text-transform: uppercase; margin: 0 0 15px 0; line-height: 1.2; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.9); }
+        .about-hero p { font-size: clamp(14px, 1.8vw, 16px); color: #FFFFFF; max-width: 700px; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.8); margin: 0; }
 
-        .about-section { padding-bottom: 60px; }
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .about-card { padding: 30px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .about-section { padding-bottom: 100px; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .about-card { padding: 30px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1); transition: var(--transition-premium); }
+        .about-card:hover { border-color: rgba(194, 166, 125, 0.5); transform: translateY(-5px); }
         .about-card.full-width { grid-column: 1 / -1; }
-        .about-card h3 { font-size: 16px; color: var(--brand-secondary); text-transform: uppercase; margin-bottom: 15px; }
+        .about-card h3 { font-size: 16px; color: var(--brand-secondary); text-transform: uppercase; margin: 0 0 15px 0; letter-spacing: 1px; }
         .about-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; margin: 0; }
+
+        /* ФУТЕР - Идентичный портфолио */
+        footer { background: rgba(7, 9, 11, 0.95); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.15); width: 100%; position: relative; z-index: 10; }
+        .footer-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .footer-info { display: flex; flex-direction: column; gap: 30px; align-items: center; margin-bottom: 45px; width: 100%; }
+        .footer-link-main { color: var(--white); text-decoration: none; font-weight: 400; font-size: 15px; display: flex; align-items: center; gap: 10px; opacity: 0.8; transition: opacity 0.3s; }
+        .footer-link-main:hover { opacity: 1; color: var(--brand-secondary); }
+        .footer-emails { font-size: 14px; color: var(--text-muted); }
+        .footer-emails a { color: var(--white); text-decoration: none; opacity: 0.8; }
+        .footer-emails a:hover { opacity: 1; color: var(--brand-secondary); }
         
-        footer { padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        .footer-socials { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; }
-        .footer-socials a { color: #ccc; font-size: 20px; transition: 0.3s; }
-        .footer-socials a:hover { color: var(--white); }
+        .footer-socials { display: flex; justify-content: center; gap: 35px; margin-bottom: 45px; }
+        .footer-socials a { color: var(--text-muted); font-size: 24px; transition: var(--transition-premium); text-decoration: none; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; }
+        .footer-socials a:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); }
+        .footer-socials a.fb:hover { color: var(--facebook); border-color: var(--facebook); }
+        .footer-socials a.ig:hover { color: var(--instagram); border-color: var(--instagram); }
+        .footer-socials a.wa:hover { color: var(--whatsapp); border-color: var(--whatsapp); }
+        .footer-socials a.tg:hover { color: var(--telegram); border-color: var(--telegram); }
+        
+        .footer-bottom { width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; font-size: 11px; color: #5f6d77; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
 
         /* АДАПТИВ */
         @media (max-width: 768px) {
-            .about-grid { grid-template-columns: 1fr; }
-            .logo-img { height: 45px; }
-            .nav-link { padding: 6px 12px; font-size: 10px; }
+            .about-grid { grid-template-columns: 1fr; gap: 20px; }
+            .logo-img { height: 70px; } /* В точности как в портфолио */
+            .about-hero { padding-top: 160px; padding-bottom: 40px; }
         }
     </style>
 </head>
@@ -105,13 +142,24 @@
     </div>
 
     <footer>
-        <div class="footer-socials">
-            <a href="https://wa.me/35796129815"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=100089827035567"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://telegram.me/tardimunion"><i class="fab fa-telegram-plane"></i></a>
-            <a href="https://www.instagram.com/p/DUtNM14l8oW/"><i class="fab fa-instagram"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div>
+                        <a href="tel:+35796129815" class="footer-link-main" style="margin-bottom: 6px;"><i class="fas fa-phone"></i> +357 96 129815</a>
+                        <a href="tel:+35795583003" class="footer-link-main"><i class="fas fa-phone"></i> +357 95 583003</a>
+                    </div>
+                    <div class="footer-emails"><div><i class="far fa-envelope"></i> <a href="mailto:tardimunion@gmail.com">tardimunion@gmail.com</a></div></div>
+                </div>
+                <div class="footer-socials">
+                    <a href="https://wa.me/35796129815" target="_blank" rel="noopener" class="wa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100089827035567" target="_blank" rel="noopener" class="fb"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener" class="ig"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="footer-bottom">© 2026 TarDim Union Ltd. Все права защищены.</div>
+            </div>
         </div>
-        <p style="color:#5f6d77; font-size: 11px;">© 2026 TarDim Union Ltd.</p>
     </footer>
 </body>
 </html>
