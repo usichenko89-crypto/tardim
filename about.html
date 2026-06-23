@@ -29,12 +29,21 @@
         }
 
         /* Единый фон с портфолио */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+body::before {
+            content: ""; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100vh; 
             z-index: -1;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.85) 100%), 
-                        url('https://i.ibb.co/67kW8bwM/deevid-gen-asset-126832067.png');
-            background-position: center center; background-repeat: no-repeat; background-size: cover;
+            background-color: #000;
+            background-image: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.85) 100%), 
+                              url('https://i.ibb.co/hJQVJxv8/alan-jiang-Zq-SHsj8-GOUk-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
         }
 
         @media only screen and (max-device-width: 1024px) {
