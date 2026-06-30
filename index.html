@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-body::before {
+        body::before {
             content: ""; 
             position: fixed; 
             top: 0; 
@@ -185,9 +185,36 @@ body::before {
             .service-pan-card { border-bottom: 1px solid rgba(255,255,255,0.15); }
             .service-pan-card:nth-child(2) { border-right: none; }
         }
+        
         @media (max-width: 768px) {
-            .services-panorama { grid-template-columns: 1fr; }
-            .service-pan-card { border-right: none; aspect-ratio: 1 / 1.1; }
+            /* Стили для горизонтального скролла блока услуг */
+            .services-panorama { 
+                display: flex; 
+                flex-wrap: nowrap; 
+                overflow-x: auto; 
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch; 
+                scroll-snap-type: x mandatory; 
+                padding-bottom: 10px;
+                border-bottom: none;
+            }
+            
+            /* Кастомизация ползунка скролла для эстетики */
+            .services-panorama::-webkit-scrollbar { height: 4px; }
+            .services-panorama::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+            .services-panorama::-webkit-scrollbar-thumb { background: var(--brand-secondary); border-radius: 4px; }
+            
+            .service-pan-card { 
+                flex: 0 0 85%; /* Карточка занимает 85% экрана, чтобы было видно край следующей */
+                max-width: 85%;
+                scroll-snap-align: start; 
+                border-right: 1px solid rgba(255,255,255,0.15) !important; 
+                border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+                aspect-ratio: 1 / 1.2; 
+            }
+            .service-pan-card:last-child { border-right: none !important; }
+            
+            /* Остальные мобильные стили */
             .logo-img { height: 70px; }
             .hero { padding-top: 180px; min-height: auto; padding-bottom: 60px; }
             .section { padding: 60px 0; }
