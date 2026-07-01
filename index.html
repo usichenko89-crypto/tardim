@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TarDim Union Ltd | Строительство и ремонт Лимассол</title>
+    <title>TarDim Union Ltd | Engineering & Fit-out Limassol</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
         :root {
@@ -19,6 +19,11 @@
             --transition-premium: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* ЯЗЫКОВОЙ ПЕРЕКЛЮЧАТЕЛЬ CSS (Английский по умолчанию) */
+        span.ru { display: none; }
+        html.lang-ru span.en { display: none; }
+        html.lang-ru span.ru { display: inline; }
+
         html { background-color: #000; scroll-behavior: smooth; }
 
         body { 
@@ -32,48 +37,30 @@
         }
 
         body::before {
-            content: ""; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100vh; 
-            z-index: -1;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;
             background-color: #000;
             background-image: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.85) 100%), 
                               url('https://i.ibb.co/hJQVJxv8/alan-jiang-Zq-SHsj8-GOUk-unsplash.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-size: cover; background-position: center; background-repeat: no-repeat;
         }
 
-        @media only screen and (max-device-width: 1024px) {
-            html, body { background-attachment: scroll !important; }
-        }
-        
+        @media only screen and (max-device-width: 1024px) { html, body { background-attachment: scroll !important; } }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
-        .container-fluid { width: 100%; padding: 0; }
 
-        /* Базовая анимация секций */
         .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition-premium); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* ШАПКА */
         header { 
-            position: fixed; top: 0; left: 0; width: 100%; 
-            padding: 25px 0; z-index: 1000; 
+            position: fixed; top: 0; left: 0; width: 100%; padding: 25px 0; z-index: 1000; 
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
         }
         header.scrolled {
-            padding: 10px 0;
-            background: rgba(10, 14, 18, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            padding: 10px 0; background: rgba(10, 14, 18, 0.85);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         header .container { display: flex; justify-content: space-between; align-items: center; }
         
@@ -82,120 +69,84 @@
         header.scrolled .logo-img { height: 60px; }
         .logo-link:hover .logo-img { opacity: 1; }
 
-        /* ВЫПАДАЮЩЕЕ МЕНЮ */
         .header-right { display: flex; align-items: center; }
+        .lang-btn {
+            background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.15); 
+            width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px);
+            margin-right: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        header.scrolled .lang-btn { width: 42px; height: 42px; font-size: 13px; }
+        .lang-btn:hover { border-color: var(--brand-secondary); background: var(--brand-secondary); color: #000; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(194, 166, 125, 0.4); }
+
         .dropdown { position: relative; display: inline-block; }
         .dropbtn { 
             background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.15); 
             width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-size: 18px; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 18px; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         header.scrolled .dropbtn { width: 42px; height: 42px; font-size: 16px; }
-        .dropbtn:hover, .dropdown:hover .dropbtn, .dropbtn.active { 
-            border-color: var(--brand-secondary); background: var(--brand-secondary); color: #000; transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(194, 166, 125, 0.4);
-        }
+        .dropbtn:hover, .dropdown:hover .dropbtn, .dropbtn.active { border-color: var(--brand-secondary); background: var(--brand-secondary); color: #000; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(194, 166, 125, 0.4); }
         .dropdown-content {
             visibility: hidden; position: absolute; right: 0; top: 120%; min-width: 240px;
             background-color: rgba(14, 19, 23, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0px 15px 40px rgba(0,0,0,0.9); z-index: 1000;
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden;
+            box-shadow: 0px 15px 40px rgba(0,0,0,0.9); z-index: 1000; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden;
             opacity: 0; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .dropdown:hover .dropdown-content, .dropdown-content.show {
-            visibility: visible; opacity: 1; transform: translateY(0); top: 100%; margin-top: 15px;
-        }
-        .dropdown-content a {
-            color: var(--white); padding: 18px 25px; text-decoration: none; display: flex; align-items: center; gap: 12px;
-            font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500;
-            border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition-premium);
-        }
+        .dropdown:hover .dropdown-content, .dropdown-content.show { visibility: visible; opacity: 1; transform: translateY(0); top: 100%; margin-top: 15px; }
+        .dropdown-content a { color: var(--white); padding: 18px 25px; text-decoration: none; display: flex; align-items: center; gap: 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition-premium); }
         .dropdown-content a i { font-size: 14px; opacity: 0.5; transition: 0.3s; }
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background-color: rgba(194, 166, 125, 0.08); color: var(--brand-secondary); padding-left: 30px; }
         .dropdown-content a:hover i { opacity: 1; color: var(--brand-secondary); }
 
-        /* HERO СЕКЦИЯ */
         .hero { text-align: left; color: var(--white); position: relative; display: flex; align-items: center; min-height: 100vh; width: 100%; padding-top: 100px; }
         .hero .container { position: relative; z-index: 1; max-width: 1200px; }
         .hero h1 { font-size: clamp(26px, 5vw, 56px); text-transform: uppercase; font-weight: 400; margin: 0 0 22px 0; line-height: 1.2; letter-spacing: 2px; max-width: 900px; text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.9); animation: fadeInUp 1s ease-out 0.2s backwards; }
         .hero p { font-size: clamp(14px, 1.8vw, 18px); margin-bottom: 40px; font-weight: 400; color: #FFFFFF; max-width: 650px; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.8); animation: fadeInUp 1s ease-out 0.4s backwards; }
         .hero-btn-group { display: flex; align-items: center; gap: 25px; flex-wrap: wrap; animation: fadeInUp 1s ease-out 0.6s backwards; }
 
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        /* КНОПКИ - НОВАЯ ПУЛЬСИРУЮЩАЯ АНИМАЦИЯ */
         .btn-main { 
             padding: 18px 40px; text-decoration: none; font-weight: 600; border-radius: 6px; 
             display: inline-block; background-color: var(--brand-secondary); color: #000; 
             text-transform: uppercase; font-size: 13px; letter-spacing: 2px; border: none; 
-            cursor: pointer; transition: var(--transition-premium); 
-            position: relative; 
-            /* Добавляем светлую пульсацию */
-            animation: pulse-light 2s infinite; 
+            cursor: pointer; transition: var(--transition-premium); position: relative; animation: pulse-thin 2s infinite; 
         }
-
-        @keyframes pulse-light {
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7), 0 4px 15px rgba(0,0,0,0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0), 0 4px 15px rgba(0,0,0,0.4); }
+        @keyframes pulse-thin {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5), 0 4px 15px rgba(0,0,0,0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0), 0 4px 15px rgba(0,0,0,0.4); }
             100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0), 0 4px 15px rgba(0,0,0,0.4); }
         }
-
-        .btn-main:hover { 
-            background-color: var(--white); color: #000; transform: translateY(-3px); 
-            animation: none; /* Останавливаем пульсацию при наведении */
-            box-shadow: 0 8px 25px rgba(255,255,255,0.3); 
-        }
-        
-        .btn-outline { 
-            background-color: transparent; border: 1px solid var(--brand-secondary); color: var(--brand-secondary); 
-            animation: none; /* Отключаем пульсацию для второстепенной кнопки */
-        }
-        .btn-outline:hover { 
-            background-color: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); 
-        }
+        .btn-main:hover { background-color: var(--white); color: #000; transform: translateY(-3px); animation: none; box-shadow: 0 8px 25px rgba(255,255,255,0.3); }
+        .btn-outline { background-color: transparent; border: 1px solid var(--brand-secondary); color: var(--brand-secondary); animation: none; }
+        .btn-outline:hover { background-color: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); }
 
         .section { padding: 100px 0; width: 100%; position: relative; }
         .section-header-premium { text-align: left; margin-bottom: 50px; }
         .section-header-premium .tag { font-size: 12px; text-transform: uppercase; letter-spacing: 5px; color: var(--brand-secondary); display: block; margin-bottom: 12px; font-weight: 600; }
         .section-header-premium h2 { font-size: clamp(22px, 3.5vw, 32px); text-transform: uppercase; font-weight: 400; letter-spacing: 2px; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.8); }
 
-        /* ПРИНЦИПЫ */
         .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; gap: 30px; margin-top: 40px; }
         .principles-item { 
-            padding: 40px; 
-            background: linear-gradient(145deg, rgba(25, 30, 35, 0.6), rgba(7, 9, 11, 0.8));
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            transition: var(--transition-premium);
-            opacity: 0; transform: translateY(30px); 
+            padding: 40px; background: linear-gradient(145deg, rgba(25, 30, 35, 0.6), rgba(7, 9, 11, 0.8));
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px; transition: var(--transition-premium); opacity: 0; transform: translateY(30px); 
         }
         .reveal.active .principles-item { opacity: 1; transform: translateY(0); }
         .reveal.active .principles-item:nth-child(1) { transition-delay: 0.1s; }
         .reveal.active .principles-item:nth-child(2) { transition-delay: 0.3s; }
         .reveal.active .principles-item:nth-child(3) { transition-delay: 0.5s; }
         
-        .principles-item:hover {
-            transform: translateY(-10px);
-            border-color: rgba(194, 166, 125, 0.4);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
+        .principles-item:hover { transform: translateY(-10px); border-color: rgba(194, 166, 125, 0.4); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
         .principles-item h4 { font-size: 15px; color: var(--brand-secondary); text-transform: uppercase; font-weight: 600; margin: 0 0 20px 0; letter-spacing: 2px; }
         .principles-item p { font-size: 14px; color: var(--text-light); line-height: 1.7; margin: 0; font-weight: 300; }
 
-        /* УСЛУГИ */
         .services-panorama { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; gap: 20px; }
         .service-pan-card { 
-            position: relative; aspect-ratio: 1 / 1.3; overflow: hidden; 
-            cursor: pointer; background: rgba(7, 9, 11, 0.8); 
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: var(--transition-premium); 
+            position: relative; aspect-ratio: 1 / 1.3; overflow: hidden; cursor: pointer; background: rgba(7, 9, 11, 0.8); 
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition-premium); 
             opacity: 0; transform: translateY(30px);
         }
         .reveal.active .service-pan-card { opacity: 1; transform: translateY(0); }
@@ -211,16 +162,11 @@
         .service-pan-list li { font-size: 13px; color: var(--text-light); margin-bottom: 8px; font-weight: 300; position: relative; padding-left: 12px; }
         .service-pan-list li::before { content: "•"; position: absolute; left: 0; color: var(--brand-secondary); }
         
-        .service-pan-card:hover { 
-            border-color: rgba(194, 166, 125, 0.3);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            transform: translateY(-8px);
-        }
+        .service-pan-card:hover { border-color: rgba(194, 166, 125, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: translateY(-8px); }
         .service-pan-card:hover h3 { color: var(--brand-secondary); }
         .service-pan-card:hover img { opacity: 0.35; transform: scale(1.08); }
         .service-pan-card:hover .service-pan-list { opacity: 1; max-height: 220px; margin-top: 5px; }
 
-        /* FOOTER & SOCIALS */
         footer { background: rgba(7, 9, 11, 0.95); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; position: relative; z-index: 10; }
         .footer-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .footer-info { display: flex; flex-direction: column; gap: 30px; align-items: center; margin-bottom: 45px; width: 100%; }
@@ -269,25 +215,15 @@
         
         @media (max-width: 768px) {
             .services-panorama { 
-                display: flex; 
-                flex-wrap: nowrap; 
-                overflow-x: auto; 
-                overflow-y: hidden;
-                -webkit-overflow-scrolling: touch; 
-                scroll-snap-type: x mandatory; 
-                padding-bottom: 20px;
-                gap: 15px;
+                display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden;
+                -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; 
+                padding-bottom: 20px; gap: 15px;
             }
             .services-panorama::-webkit-scrollbar { height: 4px; }
             .services-panorama::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
             .services-panorama::-webkit-scrollbar-thumb { background: var(--brand-secondary); border-radius: 4px; }
             
-            .service-pan-card { 
-                flex: 0 0 85%; 
-                max-width: 85%;
-                scroll-snap-align: center; 
-                aspect-ratio: 1 / 1.25; 
-            }
+            .service-pan-card { flex: 0 0 85%; max-width: 85%; scroll-snap-align: center; aspect-ratio: 1 / 1.25; }
             .reveal.active .service-pan-card { transition-delay: 0s !important; transform: translateY(0) !important; opacity: 1 !important; }
             
             .logo-img { height: 75px; }
@@ -297,6 +233,10 @@
             .scroll-to-top { bottom: 20px !important; right: 20px !important; width: 44px !important; height: 44px !important; font-size: 15px !important; }
         }
     </style>
+    <script>
+        // Предотвращаем мерцание при загрузке
+        if(localStorage.getItem('userLang') === 'ru') { document.documentElement.classList.add('lang-ru'); }
+    </script>
 </head>
 <body>
 
@@ -306,12 +246,13 @@
                 <img src="https://i.ibb.co/Xmz0cg6/photo-2026-06-09-21-35-46-Photoroom.png" alt="TarDim Union Logo" class="logo-img">
             </a>
             <div class="header-right">
+                <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">RU</button>
                 <div class="dropdown">
                     <button class="dropbtn" onclick="toggleMenu(event)" id="menuBtn"><i class="fas fa-bars"></i></button>
                     <div class="dropdown-content" id="dropdownMenu">
-                        <a href="index.html"><i class="fas fa-home"></i> Главная</a>
-                        <a href="portfolio.html"><i class="fas fa-images"></i> Портфолио</a>
-                        <a href="about.html"><i class="fas fa-info-circle"></i> О компании</a>
+                        <a href="index.html"><i class="fas fa-home"></i> <span class="ru">Главная</span><span class="en">Home</span></a>
+                        <a href="portfolio.html"><i class="fas fa-images"></i> <span class="ru">Портфолио</span><span class="en">Portfolio</span></a>
+                        <a href="about.html"><i class="fas fa-info-circle"></i> <span class="ru">О компании</span><span class="en">About Us</span></a>
                     </div>
                 </div>
             </div>
@@ -320,10 +261,10 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Инженерное проектирование<br>и внутренняя отделка</h1>
-            <p>Поставка и высокопрофессиональный монтаж современных архитектурных, интерьерных и отделочных решений «под ключ» в Лимассоле.</p>
+            <h1><span class="ru">Инженерное проектирование<br>и внутренняя отделка</span><span class="en">Engineering Design<br>& Interior Fit-out</span></h1>
+            <p><span class="ru">Поставка и высокопрофессиональный монтаж современных архитектурных, интерьерных и отделочных решений «под ключ» в Лимассоле.</span><span class="en">Supply and highly professional installation of modern architectural, interior, and turnkey fit-out solutions in Limassol.</span></p>
             <div class="hero-btn-group">
-                <button onclick="openContactsModal()" class="btn-main">Связаться с нами</button>
+                <button onclick="openContactsModal()" class="btn-main"><span class="ru">Связаться с нами</span><span class="en">Contact Us</span></button>
             </div>
         </div>
     </section>
@@ -331,21 +272,21 @@
     <section id="principles-section" class="section reveal">
         <div class="container">
             <div class="section-header-premium">
-                <span class="tag">Принципы</span>
-                <h2>На которых строится наша работа</h2>
+                <span class="tag"><span class="ru">Принципы</span><span class="en">Principles</span></span>
+                <h2><span class="ru">На которых строится наша работа</span><span class="en">That Drive Our Work</span></h2>
             </div>
             <div class="principles-grid">
                 <div class="principles-item">
-                    <h4>Комплексный подход и аккуратность</h4>
-                    <p>Мы сопровождаем каждый строительный объект на всех этапах. Тщательно прорабатываем детали, гарантируя бескомпромиссную чистоту и надежность выполнения малярных и монтажных работ.</p>
+                    <h4><span class="ru">Комплексный подход и аккуратность</span><span class="en">Comprehensive Approach & Precision</span></h4>
+                    <p><span class="ru">Мы сопровождаем каждый строительный объект на всех этапах. Тщательно прорабатываем детали, гарантируя бескомпромиссную чистоту и надежность выполнения малярных и монтажных работ.</span><span class="en">We manage every construction site at all stages. We meticulously work through details, guaranteeing uncompromising cleanliness and reliability of painting and installation works.</span></p>
                 </div>
                 <div class="principles-item">
-                    <h4>Рациональные и умные решения</h4>
-                    <p>Подбираем оптимальные передовые материалы под ваш бюджет. Специализируемся на внедрении долговечных решений, которые делают интерьеры красивыми и функциональными.</p>
+                    <h4><span class="ru">Рациональные и умные решения</span><span class="en">Rational & Smart Solutions</span></h4>
+                    <p><span class="ru">Подбираем оптимальные передовые материалы под ваш бюджет. Специализируемся на внедрении долговечных решений, которые делают интерьеры красивыми и функциональными.</span><span class="en">We select the optimal advanced materials for your budget. We specialize in implementing durable solutions that make interiors beautiful and functional.</span></p>
                 </div>
                 <div class="principles-item">
-                    <h4>Индивидуальность и сроки</h4>
-                    <p>Строгое соблюдение утвержденного графика работ. Профессионально подходим к задачам любого объема — от точечной реставрации до масштабной коммерческой реконструкции.</p>
+                    <h4><span class="ru">Индивидуальность и сроки</span><span class="en">Individuality & Deadlines</span></h4>
+                    <p><span class="ru">Строгое соблюдение утвержденного графика работ. Профессионально подходим к задачам любого объема — от точечной реставрации до масштабной коммерческой реконструкции.</span><span class="en">Strict adherence to the approved work schedule. We professionally handle tasks of any scale — from targeted restoration to large-scale commercial reconstruction.</span></p>
                 </div>
             </div>
         </div>
@@ -354,8 +295,8 @@
     <section id="services-section" class="reveal" style="padding: 20px 0 80px 0;">
         <div class="container">
             <div class="section-header-premium">
-                <span class="tag">Услуги</span>
-                <h2>Направления деятельности</h2>
+                <span class="tag"><span class="ru">Услуги</span><span class="en">Services</span></span>
+                <h2><span class="ru">Направления деятельности</span><span class="en">Areas of Expertise</span></h2>
             </div>
         </div>
         <div class="container"> 
@@ -363,51 +304,51 @@
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=600" alt="Ремонт и отделка">
                     <div class="service-pan-overlay">
-                        <h3>Ремонт и отделка</h3>
+                        <h3><span class="ru">Ремонт и отделка</span><span class="en">Repair & Fit-out</span></h3>
                         <ul class="service-list service-pan-list">
-                            <li>Внутренняя отделка премиум-класса</li>
-                            <li>Капитальный и косметический ремонт</li>
-                            <li>Малярные работы и все виды обоев</li>
+                            <li><span class="ru">Внутренняя отделка премиум-класса</span><span class="en">Premium interior fit-out</span></li>
+                            <li><span class="ru">Капитальный и косметический ремонт</span><span class="en">Major and cosmetic repairs</span></li>
+                            <li><span class="ru">Малярные работы и все виды обоев</span><span class="en">Painting and all types of wallpapers</span></li>
                         </ul>
                     </div>
                 </div>
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=600" alt="Покрытия и панели">
                     <div class="service-pan-overlay">
-                        <h3>Покрытия и панели</h3>
+                        <h3><span class="ru">Покрытия и панели</span><span class="en">Coatings & Panels</span></h3>
                         <ul class="service-list service-pan-list">
-                            <li>Укладка ламината и паркета</li>
-                            <li>Монтаж стеновых интерьерных панелей</li>
-                            <li>Установка алюминиевых панорамных систем</li>
+                            <li><span class="ru">Укладка ламината и паркета</span><span class="en">Laminate and parquet installation</span></li>
+                            <li><span class="ru">Монтаж стеновых интерьерных панелей</span><span class="en">Installation of interior wall panels</span></li>
+                            <li><span class="ru">Установка алюминиевых панорамных систем</span><span class="en">Installation of panoramic systems</span></li>
                         </ul>
                     </div>
                 </div>
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600" alt="Демонтажные работы">
                     <div class="service-pan-overlay">
-                        <h3>Демонтажные работы</h3>
+                        <h3><span class="ru">Демонтажные работы</span><span class="en">Demolition Works</span></h3>
                         <ul class="service-list service-pan-list">
-                            <li>Снос стен, перегородок и старой отделки</li>
-                            <li>Подготовка помещений к перепланировке</li>
-                            <li>Демонтаж фасадных систем утеплителя</li>
+                            <li><span class="ru">Снос стен, перегородок и старой отделки</span><span class="en">Demolition of walls, partitions, old finishes</span></li>
+                            <li><span class="ru">Подготовка помещений к перепланировке</span><span class="en">Preparation of premises for redevelopment</span></li>
+                            <li><span class="ru">Демонтаж фасадных систем утеплителя</span><span class="en">Dismantling of facade insulation systems</span></li>
                         </ul>
                     </div>
                 </div>
                 <div class="service-pan-card" onclick="openContactsModal()">
                     <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=600" alt="Реставрация">
                     <div class="service-pan-overlay">
-                        <h3>Реставрация поверхностей</h3>
+                        <h3><span class="ru">Реставрация поверхностей</span><span class="en">Surface Restoration</span></h3>
                         <ul class="service-list service-pan-list">
-                            <li>Реставрация мебели и покрытий</li>
-                            <li>Локальное восстановление плитки</li>
-                            <li>Устранение дефектов без полной замены</li>
+                            <li><span class="ru">Реставрация мебели и покрытий</span><span class="en">Furniture and coating restoration</span></li>
+                            <li><span class="ru">Локальное восстановление плитки</span><span class="en">Local tile restoration</span></li>
+                            <li><span class="ru">Устранение дефектов без полной замены</span><span class="en">Defect removal without complete replacement</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 60px;">
-                <a href="portfolio.html" class="btn-main btn-outline">Перейти в портфолио</a>
+                <a href="portfolio.html" class="btn-main btn-outline"><span class="ru">Перейти в портфолио</span><span class="en">View Portfolio</span></a>
             </div>
         </div>
     </section>
@@ -428,7 +369,7 @@
                     <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram-plane"></i></a>
                     <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener" class="ig"><i class="fab fa-instagram"></i></a>
                 </div>
-                <div class="footer-bottom">© 2026 TarDim Union Ltd. Все права защищены.</div>
+                <div class="footer-bottom"><span class="ru">© 2026 TarDim Union Ltd. Все права защищены.</span><span class="en">© 2026 TarDim Union Ltd. All rights reserved.</span></div>
             </div>
         </div>
     </footer>
@@ -436,40 +377,62 @@
     <div id="contactsModal" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-close-btn" onclick="closeContactsModal()"><i class="fas fa-times"></i></button>
-            <h3>Связаться с нами</h3>
-            <div class="subtitle">Выберите удобный способ коммуникации</div>
+            <h3><span class="ru">Связаться с нами</span><span class="en">Contact Us</span></h3>
+            <div class="subtitle"><span class="ru">Выберите удобный способ коммуникации</span><span class="en">Choose a convenient communication method</span></div>
             <div class="modal-contacts-list">
-                <a href="tel:+35796129815" class="contact-btn-large btn-phone-style"><i class="fas fa-phone-alt"></i> Звонок: +357 96 129815</a>
-                <a href="tel:+35795583003" class="contact-btn-large btn-phone-style"><i class="fas fa-phone-alt"></i> Звонок: +357 95 583003</a>
+                <a href="tel:+35796129815" class="contact-btn-large btn-phone-style"><i class="fas fa-phone-alt"></i> <span class="ru">Звонок:</span><span class="en">Call:</span> +357 96 129815</a>
+                <a href="tel:+35795583003" class="contact-btn-large btn-phone-style"><i class="fas fa-phone-alt"></i> <span class="ru">Звонок:</span><span class="en">Call:</span> +357 95 583003</a>
                 <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="contact-btn-large btn-tg-style"><i class="fab fa-telegram-plane"></i> Telegram</a>
                 <a href="https://wa.me/35796129815" target="_blank" rel="noopener" class="contact-btn-large btn-wa-style"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             </div>
         </div>
     </div>
 
-    <div id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()" title="Наверх">
+    <div id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()" title="Back to top">
         <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
-        /* Управление выпадающим меню на мобильных */
-        function toggleMenu(e) {
-            e.stopPropagation();
-            document.getElementById("dropdownMenu").classList.toggle("show");
-            document.getElementById("menuBtn").classList.toggle("active");
+        // УНИВЕРСАЛЬНАЯ ЛОГИКА ЯЗЫКА (Синхронизация между вкладками)
+        function toggleLanguage() {
+            if (document.documentElement.classList.contains('lang-ru')) {
+                document.documentElement.classList.remove('lang-ru');
+                localStorage.setItem('userLang', 'en');
+            } else {
+                document.documentElement.classList.add('lang-ru');
+                localStorage.setItem('userLang', 'ru');
+            }
+            updateLangUI();
         }
-        window.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                const dropdown = document.getElementById("dropdownMenu");
-                const btn = document.getElementById("menuBtn");
-                if (dropdown && dropdown.classList.contains('show')) {
-                    dropdown.classList.remove('show');
-                    btn.classList.remove('active');
-                }
+
+        function updateLangUI() {
+            const isRu = document.documentElement.classList.contains('lang-ru');
+            const langBtn = document.getElementById('langBtn');
+            const scrollBtn = document.getElementById('scrollTopBtn');
+            if(langBtn) langBtn.innerText = isRu ? 'EN' : 'RU';
+            if(scrollBtn) scrollBtn.title = isRu ? 'Наверх' : 'Back to top';
+            window.dispatchEvent(new Event('languageChanged'));
+        }
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'userLang') {
+                if (e.newValue === 'ru') document.documentElement.classList.add('lang-ru');
+                else document.documentElement.classList.remove('lang-ru');
+                updateLangUI();
             }
         });
 
-        /* Анимация секций при скролле */
+        document.addEventListener('DOMContentLoaded', updateLangUI);
+
+        // СТАНДАРТНЫЕ СКРИПТЫ
+        function toggleMenu(e) { e.stopPropagation(); document.getElementById("dropdownMenu").classList.toggle("show"); document.getElementById("menuBtn").classList.toggle("active"); }
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                const dropdown = document.getElementById("dropdownMenu"); const btn = document.getElementById("menuBtn");
+                if (dropdown && dropdown.classList.contains('show')) { dropdown.classList.remove('show'); btn.classList.remove('active'); }
+            }
+        });
+
         function revealSections() {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(reveal => {
@@ -483,14 +446,8 @@
         
         function handleScrollEvents() {
             const currentScrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-            
-            // Кнопка наверх
-            if (currentScrollHeight > 300) { scrollTopBtn.classList.add('visible'); } 
-            else { scrollTopBtn.classList.remove('visible'); }
-
-            // Липкая шапка с размытием
-            if (currentScrollHeight > 50) { header.classList.add('scrolled'); } 
-            else { header.classList.remove('scrolled'); }
+            if (currentScrollHeight > 300) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); }
+            if (currentScrollHeight > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
         }
 
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
