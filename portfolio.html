@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Портфолио | TarDim Union Ltd</title>
+    <title>Portfolio | TarDim Union Ltd</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
         :root {
@@ -16,8 +16,13 @@
             --facebook: #1877F2;
             --telegram: #0088cc;
             --instagram: #E1306C;
-            --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-premium: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        /* ЯЗЫКОВОЙ ПЕРЕКЛЮЧАТЕЛЬ CSS */
+        span.ru { display: none; }
+        html.lang-ru span.en { display: none; }
+        html.lang-ru span.ru { display: inline; }
 
         html { background-color: #000; scroll-behavior: smooth; }
 
@@ -30,53 +35,70 @@
         }
 
       body::before {
-            content: ""; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100vh; 
-            z-index: -1;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;
             background-color: #000;
             background-image: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.85) 100%), 
                               url('https://i.ibb.co/hJQVJxv8/alan-jiang-Zq-SHsj8-GOUk-unsplash.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-size: cover; background-position: center; background-repeat: no-repeat;
         }
 
-        @media only screen and (max-device-width: 1024px) {
-            html, body { background-attachment: scroll !important; }
-        }
-        
+        @media only screen and (max-device-width: 1024px) { html, body { background-attachment: scroll !important; } }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
-        .reveal { opacity: 0; transform: translateY(20px); transition: var(--transition-premium); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition-premium); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* ШАПКА */
         header { 
-            position: absolute; top: 0; left: 0; width: 100%; 
-            padding: 20px 0; z-index: 1000; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+            position: fixed; top: 0; left: 0; width: 100%; padding: 25px 0; z-index: 1000; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+        }
+        header.scrolled {
+            padding: 10px 0; background: rgba(10, 14, 18, 0.85);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         header .container { display: flex; justify-content: space-between; align-items: center; }
         
         .logo-link { display: flex; align-items: center; text-decoration: none; }
-        .logo-img { height: 90px; width: auto; display: block; object-fit: contain; opacity: 0.95; transition: opacity 0.3s ease; }
+        .logo-img { height: 90px; width: auto; display: block; object-fit: contain; opacity: 0.95; transition: height 0.4s ease, opacity 0.3s ease; }
+        header.scrolled .logo-img { height: 60px; }
         .logo-link:hover .logo-img { opacity: 1; }
 
-        /* ССЫЛКА НА ГЛАВНУЮ */
-        .nav-link { 
-            color: var(--white); text-decoration: none; font-weight: 500; text-transform: uppercase; 
-            font-size: 13px; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 20px; transition: var(--transition-premium); white-space: nowrap;
+        .header-right { display: flex; align-items: center; }
+        
+        .lang-btn {
+            background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.15); 
+            width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px);
+            margin-right: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        .nav-link:hover { border-color: var(--brand-secondary); color: var(--brand-secondary); }
+        header.scrolled .lang-btn { width: 42px; height: 42px; font-size: 13px; }
+        .lang-btn:hover { border-color: var(--brand-secondary); background: var(--brand-secondary); color: #000; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(194, 166, 125, 0.4); }
 
-        /* МИНИ БАННЕР */
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { 
+            background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.15); 
+            width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 18px; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        header.scrolled .dropbtn { width: 42px; height: 42px; font-size: 16px; }
+        .dropbtn:hover, .dropdown:hover .dropbtn, .dropbtn.active { border-color: var(--brand-secondary); background: var(--brand-secondary); color: #000; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(194, 166, 125, 0.4); }
+        .dropdown-content {
+            visibility: hidden; position: absolute; right: 0; top: 120%; min-width: 240px;
+            background-color: rgba(14, 19, 23, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0px 15px 40px rgba(0,0,0,0.9); z-index: 1000; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden;
+            opacity: 0; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dropdown:hover .dropdown-content, .dropdown-content.show { visibility: visible; opacity: 1; transform: translateY(0); top: 100%; margin-top: 15px; }
+        .dropdown-content a { color: var(--white); padding: 18px 25px; text-decoration: none; display: flex; align-items: center; gap: 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition-premium); }
+        .dropdown-content a i { font-size: 14px; opacity: 0.5; transition: 0.3s; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: rgba(194, 166, 125, 0.08); color: var(--brand-secondary); padding-left: 30px; }
+        .dropdown-content a:hover i { opacity: 1; color: var(--brand-secondary); }
+
         .hero-mini { text-align: left; color: var(--white); position: relative; display: flex; align-items: center; min-height: 45vh; width: 100%; padding-top: 140px; }
         .hero-mini .container { position: relative; z-index: 1; max-width: 1200px; }
         .hero-mini h1 { font-size: clamp(26px, 5vw, 46px); text-transform: uppercase; font-weight: 400; margin: 0 0 15px 0; line-height: 1.2; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.9); }
@@ -84,40 +106,40 @@
 
         .section { padding: 60px 0 100px 0; width: 100%; position: relative; }
 
-        /* ПОРТФОЛИО И ФИЛЬТРЫ */
         .filter-buttons { margin-bottom: 35px; display: flex; gap: 12px; flex-wrap: wrap; }
-        .filter-btn { padding: 10px 20px; border: 1px solid var(--brand-secondary); background: transparent; color: var(--white); font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; cursor: pointer; transition: var(--transition-premium); }
-        .filter-btn.active, .filter-btn:hover { background: var(--brand-secondary); color: #000; }
+        .filter-btn { padding: 12px 24px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); border-radius: 8px; color: var(--white); font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; cursor: pointer; transition: var(--transition-premium); backdrop-filter: blur(5px); }
+        .filter-btn.active, .filter-btn:hover { background: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); box-shadow: 0 5px 15px rgba(194, 166, 125, 0.3); }
 
         .portfolio-grid-premium { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 30px; width: 100%; }
         .portfolio-item-wrapper { display: block; animation: fade-in 0.5s ease-in-out forwards; }
         @keyframes fade-in { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         
-        .portfolio-item-premium { position: relative; overflow: hidden; aspect-ratio: 16 / 11; cursor: pointer; border: 1px solid rgba(255,255,255,0.15); }
-        .portfolio-item-premium img { width: 100%; height: 100%; object-fit: cover; display: block; transition: var(--transition-premium); filter: brightness(0.7); }
-        .portfolio-text-under { margin-top: 15px; display: flex; justify-content: space-between; align-items: baseline; }
-        .portfolio-text-under h3 { font-size: 16px; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; margin: 0; }
-        .portfolio-text-under p { font-size: 13px; color: var(--brand-secondary); margin: 0; }
-        .portfolio-item-premium:hover img { transform: scale(1.02); filter: brightness(0.9); }
+        .portfolio-item-premium { position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 16 / 11; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: rgba(7, 9, 11, 0.8); transition: var(--transition-premium); }
+        .portfolio-item-premium img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease, filter 0.5s ease; filter: brightness(0.65); }
+        .portfolio-text-under { margin-top: 15px; display: flex; justify-content: space-between; align-items: baseline; padding: 0 5px; }
+        .portfolio-text-under h3 { font-size: 16px; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; margin: 0; transition: var(--transition-premium); }
+        .portfolio-text-under p { font-size: 13px; color: var(--text-muted); margin: 0; transition: var(--transition-premium); }
+        
+        .portfolio-item-wrapper:hover .portfolio-item-premium { border-color: rgba(194, 166, 125, 0.4); box-shadow: 0 15px 35px rgba(0,0,0,0.6); transform: translateY(-8px); }
+        .portfolio-item-wrapper:hover img { transform: scale(1.05); filter: brightness(0.9); }
+        .portfolio-item-wrapper:hover h3 { color: var(--brand-secondary); }
 
-        /* ЛАЙТБОКС ГАЛЕРЕИ */
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); z-index: 999999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(10px); }
         .lightbox.show { opacity: 1; }
         .lightbox-content { position: relative; max-width: 90%; max-height: 80%; display: flex; flex-direction: column; align-items: center; transform: scale(0.95); transition: transform 0.4s ease; }
         .lightbox.show .lightbox-content { transform: scale(1); }
-        .lightbox-img { max-width: 100%; max-height: 75vh; object-fit: contain; opacity: 0; transition: opacity 0.3s ease; }
+        .lightbox-img { max-width: 100%; max-height: 75vh; object-fit: contain; opacity: 0; transition: opacity 0.3s ease; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
         .lightbox-img.loaded { opacity: 1; }
         .lightbox-spinner { position: absolute; width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--brand-secondary); border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .lightbox-caption { color: var(--white); margin-top: 18px; font-size: 15px; text-align: center; text-transform: uppercase; }
-        .lightbox-btn { position: absolute; background: rgba(255,255,255,0.03); color: var(--white); border: none; font-size: 20px; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .lightbox-btn:hover { background: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); }
+        .lightbox-caption { color: var(--white); margin-top: 18px; font-size: 15px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .lightbox-btn { position: absolute; background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.1); font-size: 18px; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .lightbox-btn:hover { background: var(--brand-secondary); color: #000; border-color: var(--brand-secondary); transform: scale(1.1); }
         .lightbox-close { top: -60px; right: 0; }
         .lightbox-prev { left: -70px; top: 50%; transform: translateY(-50%); }
         .lightbox-next { right: -70px; top: 50%; transform: translateY(-50%); }
 
-        /* FOOTER & SOCIALS */
-        footer { background: rgba(7, 9, 11, 0.95); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.15); width: 100%; position: relative; z-index: 10; }
+        footer { background: rgba(7, 9, 11, 0.95); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; position: relative; z-index: 10; }
         .footer-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .footer-info { display: flex; flex-direction: column; gap: 30px; align-items: center; margin-bottom: 45px; width: 100%; }
         .footer-link-main { color: var(--white); text-decoration: none; font-weight: 400; font-size: 15px; display: flex; align-items: center; gap: 10px; opacity: 0.8; transition: opacity 0.3s; }
@@ -136,14 +158,14 @@
         
         .footer-bottom { width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; font-size: 11px; color: #5f6d77; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; }
 
-        .scroll-to-top { position: fixed !important; bottom: 25px !important; right: 25px !important; width: 50px; height: 50px; background-color: #07090b !important; color: var(--white) !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 18px !important; cursor: pointer !important; border: 2px solid rgba(255,255,255,0.45) !important; backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important; box-shadow: 0 4px 25px rgba(0,0,0,0.7) !important; z-index: 9999999 !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important; }
+        .scroll-to-top { position: fixed !important; bottom: 25px !important; right: 25px !important; width: 50px; height: 50px; background-color: #07090b !important; color: var(--white) !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 18px !important; cursor: pointer !important; border: 2px solid rgba(255,255,255,0.2) !important; border-radius: 50% !important; backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important; box-shadow: 0 4px 25px rgba(0,0,0,0.7) !important; z-index: 9999999 !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: var(--transition-premium) !important; }
         .scroll-to-top.visible { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
-        .scroll-to-top:hover { background-color: var(--brand-secondary) !important; color: #000 !important; border-color: var(--brand-secondary) !important; }
+        .scroll-to-top:hover { background-color: var(--brand-secondary) !important; color: #000 !important; border-color: var(--brand-secondary) !important; transform: translateY(-5px) !important;}
 
         @media (max-width: 768px) {
             .portfolio-grid-premium { grid-template-columns: 1fr; gap: 35px; }
-            .logo-img { height: 70px; }
-            .hero-mini { padding-top: 160px; min-height: auto; padding-bottom: 20px; }
+            .logo-img { height: 75px; } header.scrolled .logo-img { height: 55px; }
+            .hero-mini { padding-top: 150px; min-height: auto; padding-bottom: 20px; }
             .section { padding: 40px 0 60px 0; }
             .lightbox-prev, .lightbox-next { bottom: -60px; top: auto; transform: none; }
             .lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
@@ -151,22 +173,35 @@
             .scroll-to-top { bottom: 20px !important; right: 20px !important; width: 44px !important; height: 44px !important; font-size: 15px !important; }
         }
     </style>
+    <script>
+        if(localStorage.getItem('userLang') === 'ru') { document.documentElement.classList.add('lang-ru'); }
+    </script>
 </head>
 <body>
 
-    <header>
+    <header id="mainHeader">
         <div class="container">
             <a href="index.html" class="logo-link">
                 <img src="https://i.ibb.co/Xmz0cg6/photo-2026-06-09-21-35-46-Photoroom.png" alt="TarDim Union Logo" class="logo-img">
             </a>
-            <a href="index.html" class="nav-link"><i class="fas fa-arrow-left"></i> На главную</a>
+            <div class="header-right">
+                <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">RU</button>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="toggleMenu(event)" id="menuBtn"><i class="fas fa-bars"></i></button>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <a href="index.html"><i class="fas fa-home"></i> <span class="ru">Главная</span><span class="en">Home</span></a>
+                        <a href="portfolio.html"><i class="fas fa-images"></i> <span class="ru">Портфолио</span><span class="en">Portfolio</span></a>
+                        <a href="about.html"><i class="fas fa-info-circle"></i> <span class="ru">О компании</span><span class="en">About Us</span></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
     <section class="hero-mini reveal">
         <div class="container">
-            <h1>Наше Портфолио</h1>
-            <p>Изучите примеры реализованных архитектурных и отделочных решений «под ключ».</p>
+            <h1><span class="ru">Наше Портфолио</span><span class="en">Our Portfolio</span></h1>
+            <p><span class="ru">Изучите примеры реализованных архитектурных и отделочных решений «под ключ».</span><span class="en">Explore examples of our completed turnkey architectural and fit-out solutions.</span></p>
         </div>
     </section>
 
@@ -174,32 +209,44 @@
         <div class="container">
             
             <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterPortfolio('all', event)">Все работы</button>
-                <button class="filter-btn" onclick="filterPortfolio('otdelka', event)">Отделка</button>
-                <button class="filter-btn" onclick="filterPortfolio('paneli', event)">Покрытия</button>
-                <button class="filter-btn" onclick="filterPortfolio('restavr', event)">Реставрация</button>
+                <button class="filter-btn active" onclick="filterPortfolio('all', event)"><span class="ru">Все работы</span><span class="en">All Works</span></button>
+                <button class="filter-btn" onclick="filterPortfolio('otdelka', event)"><span class="ru">Отделка</span><span class="en">Fit-out</span></button>
+                <button class="filter-btn" onclick="filterPortfolio('paneli', event)"><span class="ru">Покрытия</span><span class="en">Coatings</span></button>
+                <button class="filter-btn" onclick="filterPortfolio('restavr', event)"><span class="ru">Реставрация</span><span class="en">Restoration</span></button>
             </div>
 
             <div class="portfolio-grid-premium" id="portfolioGrid">
                 
                 <div class="portfolio-item-wrapper" data-category="otdelka" onclick="openLightbox(0)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800" alt="Комплексная отделка виллы"></div>
-                    <div class="portfolio-text-under"><h3>Отделка загородной виллы</h3><p>Лимассол</p></div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800" alt="Villa Fit-out"></div>
+                    <div class="portfolio-text-under">
+                        <h3><span class="ru">Отделка загородной виллы</span><span class="en">Country Villa Fit-out</span></h3>
+                        <p><span class="ru">Лимассол</span><span class="en">Limassol</span></p>
+                    </div>
                 </div>
                 
                 <div class="portfolio-item-wrapper" data-category="paneli" onclick="openLightbox(1)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800" alt="Монтаж напольных покрытий"></div>
-                    <div class="portfolio-text-under"><h3>Укладка инженерных покрытий</h3><p>Агиос Тихонас</p></div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800" alt="Flooring"></div>
+                    <div class="portfolio-text-under">
+                        <h3><span class="ru">Укладка инженерных покрытий</span><span class="en">Engineered Flooring Installation</span></h3>
+                        <p><span class="ru">Агиос Тихонас</span><span class="en">Agios Tychonas</span></p>
+                    </div>
                 </div>
                 
                 <div class="portfolio-item-wrapper" data-category="paneli" onclick="openLightbox(2)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" alt="Алюминиевые раздвижные системы"></div>
-                    <div class="portfolio-text-under"><h3>Монтаж панорамных систем</h3><p>Марина Лимассол</p></div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" alt="Panoramic Systems"></div>
+                    <div class="portfolio-text-under">
+                        <h3><span class="ru">Монтаж панорамных систем</span><span class="en">Panoramic Systems Installation</span></h3>
+                        <p><span class="ru">Марина Лимассол</span><span class="en">Limassol Marina</span></p>
+                    </div>
                 </div>
                 
                 <div class="portfolio-item-wrapper" data-category="restavr" onclick="openLightbox(3)">
-                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800" alt="Коммерческая реновация"></div>
-                    <div class="portfolio-text-under"><h3>Реновация офисного пространства</h3><p>Центр города</p></div>
+                    <div class="portfolio-item-premium"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800" alt="Renovation"></div>
+                    <div class="portfolio-text-under">
+                        <h3><span class="ru">Реновация офисного пространства</span><span class="en">Office Space Renovation</span></h3>
+                        <p><span class="ru">Центр города</span><span class="en">City Center</span></p>
+                    </div>
                 </div>
                 
             </div>
@@ -222,12 +269,12 @@
                     <a href="https://telegram.me/tardimunion" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram-plane"></i></a>
                     <a href="https://www.instagram.com/p/DUtNM14l8oW/" target="_blank" rel="noopener" class="ig"><i class="fab fa-instagram"></i></a>
                 </div>
-                <div class="footer-bottom">© 2026 TarDim Union Ltd. Все права защищены.</div>
+                <div class="footer-bottom"><span class="ru">© 2026 TarDim Union Ltd. Все права защищены.</span><span class="en">© 2026 TarDim Union Ltd. All rights reserved.</span></div>
             </div>
         </div>
     </footer>
 
-    <div id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()" title="Наверх">
+    <div id="scrollTopBtn" class="scroll-to-top" onclick="scrollToTop()" title="Back to top">
         <i class="fas fa-chevron-up"></i>
     </div>
 
@@ -236,23 +283,59 @@
         <div class="lightbox-content">
             <button class="lightbox-btn lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
             <button class="lightbox-btn lightbox-prev" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></button>
-            <img id="lightboxImg" class="lightbox-img" src="" alt="Галерея работ">
+            <img id="lightboxImg" class="lightbox-img" src="" alt="Gallery">
             <div id="lightboxCaption" class="lightbox-caption"></div>
             <button class="lightbox-btn lightbox-next" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
     <script>
+        // УНИВЕРСАЛЬНАЯ ЛОГИКА ЯЗЫКА (Синхронизация между вкладками)
+        function toggleLanguage() {
+            if (document.documentElement.classList.contains('lang-ru')) {
+                document.documentElement.classList.remove('lang-ru');
+                localStorage.setItem('userLang', 'en');
+            } else {
+                document.documentElement.classList.add('lang-ru');
+                localStorage.setItem('userLang', 'ru');
+            }
+            updateLangUI();
+        }
+
+        function updateLangUI() {
+            const isRu = document.documentElement.classList.contains('lang-ru');
+            const langBtn = document.getElementById('langBtn');
+            const scrollBtn = document.getElementById('scrollTopBtn');
+            if(langBtn) langBtn.innerText = isRu ? 'EN' : 'RU';
+            if(scrollBtn) scrollBtn.title = isRu ? 'Наверх' : 'Back to top';
+            window.dispatchEvent(new Event('languageChanged'));
+        }
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'userLang') {
+                if (e.newValue === 'ru') document.documentElement.classList.add('lang-ru');
+                else document.documentElement.classList.remove('lang-ru');
+                updateLangUI();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', updateLangUI);
+
+        // СТАНДАРТНЫЕ СКРИПТЫ
+        function toggleMenu(e) { e.stopPropagation(); document.getElementById("dropdownMenu").classList.toggle("show"); document.getElementById("menuBtn").classList.toggle("active"); }
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                const dropdown = document.getElementById("dropdownMenu"); const btn = document.getElementById("menuBtn");
+                if (dropdown && dropdown.classList.contains('show')) { dropdown.classList.remove('show'); btn.classList.remove('active'); }
+            }
+        });
+
         function filterPortfolio(category, e) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             e.target.classList.add('active');
-            
             document.querySelectorAll('.portfolio-item-wrapper').forEach(item => {
                 item.style.display = 'none'; 
-                
-                if (category === 'all' || item.getAttribute('data-category') === category) {
-                    setTimeout(() => { item.style.display = 'block'; }, 50);
-                }
+                if (category === 'all' || item.getAttribute('data-category') === category) { setTimeout(() => { item.style.display = 'block'; }, 50); }
             });
         }
 
@@ -260,25 +343,28 @@
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(reveal => {
                 const revealTop = reveal.getBoundingClientRect().top;
-                if (revealTop < window.innerHeight - 50) { reveal.classList.add('active'); }
+                if (revealTop < window.innerHeight - 80) { reveal.classList.add('active'); }
             });
         }
         
         const scrollTopBtn = document.getElementById('scrollTopBtn');
-        function handleScrollButton() {
+        const header = document.getElementById('mainHeader');
+        
+        function handleScrollEvents() {
             const currentScrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-            if (currentScrollHeight > 300) { scrollTopBtn.classList.add('visible'); } 
-            else { scrollTopBtn.classList.remove('visible'); }
+            if (currentScrollHeight > 300) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); }
+            if (currentScrollHeight > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
         }
+
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-        window.addEventListener('scroll', () => { revealSections(); handleScrollButton(); });
-        window.addEventListener('DOMContentLoaded', () => { revealSections(); handleScrollButton(); });
+        window.addEventListener('scroll', () => { revealSections(); handleScrollEvents(); });
+        window.addEventListener('DOMContentLoaded', () => { revealSections(); handleScrollEvents(); });
         
         const projectGalleries = [
-            { title: "Отделка загородной виллы", images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200", "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200", "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1200"] },
-            { title: "Укладка инженерных покрытий", images: ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1200", "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?q=80&w=1200"] },
-            { title: "Монтаж панорамных систем", images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200"] },
-            { title: "Реновация офисного пространства", images: ["https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200", "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1200"] }
+            { title: "<span class='ru'>Отделка загородной виллы</span><span class='en'>Country Villa Fit-out</span>", images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200", "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200", "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1200"] },
+            { title: "<span class='ru'>Укладка инженерных покрытий</span><span class='en'>Engineered Flooring Installation</span>", images: ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1200", "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?q=80&w=1200"] },
+            { title: "<span class='ru'>Монтаж панорамных систем</span><span class='en'>Panoramic Systems Installation</span>", images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200"] },
+            { title: "<span class='ru'>Реновация офисного пространства</span><span class='en'>Office Space Renovation</span>", images: ["https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200", "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1200"] }
         ];
         
         let currentProjectIndex = 0; let currentImgIndex = 0;
@@ -289,8 +375,20 @@
         function openLightbox(projectIndex) { currentProjectIndex = projectIndex; currentImgIndex = 0; modal.style.display = 'flex'; setTimeout(() => modal.classList.add('show'), 10); document.body.style.overflow = 'hidden'; updateLightboxData(); }
         function closeLightbox() { modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; lightboxImg.classList.remove('loaded'); }, 400); document.body.style.overflow = 'auto'; }
         function changeImage(direction) { const project = projectGalleries[currentProjectIndex]; currentImgIndex += direction; if (currentImgIndex >= project.images.length) currentImgIndex = 0; else if (currentImgIndex < 0) currentImgIndex = project.images.length - 1; lightboxImg.classList.remove('loaded'); updateLightboxData(); }
-        function updateLightboxData() { const project = projectGalleries[currentProjectIndex]; spinner.style.display = 'block'; lightboxImg.src = project.images[currentImgIndex]; document.getElementById('lightboxCaption').innerText = `${project.title} — Фото ${currentImgIndex + 1} из ${project.images.length}`; }
         
+        function updateLightboxData() { 
+            const project = projectGalleries[currentProjectIndex]; 
+            spinner.style.display = 'block'; 
+            lightboxImg.src = project.images[currentImgIndex]; 
+            
+            const isRu = document.documentElement.classList.contains('lang-ru');
+            const photoTxt = isRu ? 'Фото' : 'Photo';
+            const ofTxt = isRu ? 'из' : 'of';
+            
+            document.getElementById('lightboxCaption').innerHTML = `${project.title} — ${photoTxt} ${currentImgIndex + 1} ${ofTxt} ${project.images.length}`; 
+        }
+
+        window.addEventListener('languageChanged', () => { if (modal.classList.contains('show')) { updateLightboxData(); } });
         lightboxImg.addEventListener('load', () => { spinner.style.display = 'none'; lightboxImg.classList.add('loaded'); });
         modal.addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
     </script>
